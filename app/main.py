@@ -25,7 +25,7 @@ app.add_middleware(
 models.Base.metadata.create_all(bind=engine)
 
 
-# get_db関数が必要
+# データベースのセッションを取得
 def get_db():
     db = SessionLocal()
     try:
@@ -84,3 +84,26 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
     db.delete(db_user)
     db.commit()
     return {"message": "User deleted successfully"}
+
+
+@app.post("/login/")
+def login_user(user: schemas.UserLogin, db: Session = Depends(get_db)):
+    db_user = (
+        db.query(models.UserModel).filter(models.UserModel.email == user.email).first()
+    )
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    if db_user.password != user.password:
+        raise HTTPException(status_code=404, detail="Password is incorrect")
+    return db_user
+
+
+@app.post("/login/{user_id}/reset_password")
+def reset_password(user_id: int, new_password: str, db: Session = Depends(get_db)):
+    db_user = db.query(models.UserModel).filter(models.UserModel.id == user_id).first()
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    db_user.password = new_password
+    db.commit()
+    db.refresh(db_user)
+    return {"message": "Password reset successfully"}
