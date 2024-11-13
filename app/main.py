@@ -107,3 +107,6 @@ def reset_password(user_id: int, new_password: str, db: Session = Depends(get_db
     db.commit()
     db.refresh(db_user)
     return {"message": "Password reset successfully"}
+
+
+
