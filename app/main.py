@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
-from typing import List
+from typing import Any, Generator, List
 from app import models, schemas
 from app.database import SessionLocal, engine
 from fastapi.middleware.cors import CORSMiddleware
@@ -109,4 +109,7 @@ def reset_password(user_id: int, new_password: str, db: Session = Depends(get_db
     return {"message": "Password reset successfully"}
 
 
-
+@app.get("/questions/{question_id}", response_model=schemas.Question)
+def read_questions(question_id: int, db: Session = Depends(get_db)):
+    questions = db.query(models.QuestionModel).offset(question_id).first()
+    return questions
