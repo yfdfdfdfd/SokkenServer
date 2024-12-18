@@ -43,6 +43,7 @@ class FeedbackTemplate(BaseModel):
     class Config:
         orm_mode = True
 
+
 class UserAnswer(BaseModel):
     id: int
     user_id: int

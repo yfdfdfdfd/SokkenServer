@@ -4,7 +4,14 @@ from typing import Any, Generator, List
 from app import models
 from app.database import SessionLocal, engine
 from fastapi.middleware.cors import CORSMiddleware
-from app.schemas import Question, User, UserAnswer, UserAnswerCreate, UserCreate, UserLogin
+from app.schemas import (
+    Question,
+    User,
+    UserAnswer,
+    UserAnswerCreate,
+    UserCreate,
+    UserLogin,
+)
 
 app = FastAPI()  # FastAPIインスタンスを作成
 
@@ -117,14 +124,22 @@ def read_questions(question_id: int, db: Session = Depends(get_db)):
 
 
 @app.post("/results/", response_model=UserAnswer)
-def post_result(data:UserAnswerCreate, db: Session = Depends(get_db)):
-    db_user = db.query(models.UserAnswerModel).filter(models.UserModel.id == data.user_id).first()
+def post_result(data: UserAnswerCreate, db: Session = Depends(get_db)):
+    db_user = (
+        db.query(models.UserAnswerModel)
+        .filter(models.UserModel.id == data.user_id)
+        .first()
+    )
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     new_question_list = []
     for question in data.child:
         new_question = models.UserAnswerModel(
-            user_id=data.user_id, question_id=question.question_id, is_correct=question.is_correct, quize_list_uuid=question.quize_list_uuid, answered_at=question.answered_at
+            user_id=data.user_id,
+            question_id=question.question_id,
+            is_correct=question.is_correct,
+            quize_list_uuid=question.quize_list_uuid,
+            answered_at=question.answered_at,
         )
         new_question_list.append(new_question)
     db.add(new_question)
@@ -135,9 +150,11 @@ def post_result(data:UserAnswerCreate, db: Session = Depends(get_db)):
 
 @app.get("/user_answers/{user_answer_id}", response_model=UserAnswer)
 def read_user_answer(user_answer_id: int, user_id: int, db: Session = Depends(get_db)):
-    user_answer = db.query(models.UserAnswerModel).filter(
-        models.UserAnswerModel.user_id == user_id
-    ).all()
+    user_answer = (
+        db.query(models.UserAnswerModel)
+        .filter(models.UserAnswerModel.user_id == user_id)
+        .all()
+    )
     if user_answer is None:
         raise HTTPException(status_code=404, detail="User answer not found")
     return user_answer

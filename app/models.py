@@ -1,4 +1,13 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, JSON, Text
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    Boolean,
+    DateTime,
+    ForeignKey,
+    JSON,
+    Text,
+)
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
