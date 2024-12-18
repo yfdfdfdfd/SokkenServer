@@ -1,3 +1,5 @@
+from datetime import datetime
+import uuid
 from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
 from typing import Any, Generator, List
@@ -123,7 +125,9 @@ def read_questions(question_id: int, db: Session = Depends(get_db)):
     return questions
 
 
-@app.post("/results/", response_model=UserAnswer)
+@app.post(
+    "/results/", response_model=UserAnswer, description="ユーザーの回答を登録する"
+)
 def post_result(data: UserAnswerCreate, db: Session = Depends(get_db)):
     db_user = (
         db.query(models.UserAnswerModel)
@@ -132,17 +136,16 @@ def post_result(data: UserAnswerCreate, db: Session = Depends(get_db)):
     )
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
-    new_question_list = []
+    quize_list_uuid = uuid.uuid5()
     for question in data.child:
         new_question = models.UserAnswerModel(
             user_id=data.user_id,
             question_id=question.question_id,
             is_correct=question.is_correct,
-            quize_list_uuid=question.quize_list_uuid,
-            answered_at=question.answered_at,
+            quize_list_uuid=quize_list_uuid,
+            answered_at=datetime.datetime.now(),
         )
-        new_question_list.append(new_question)
-    db.add(new_question)
+        db.add(new_question)
     db.commit()
     db.refresh(new_question)
     return new_question
