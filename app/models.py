@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, JSON
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, JSON, Text
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -20,6 +20,7 @@ class QuestionModel(Base):
     question_text = Column(String(255), nullable=False)
     correct_answer = Column(String(255), nullable=False)
     choices: JSON = Column(JSON, nullable=False)
+    commentary = Column(Text, nullable=False)
     tag = Column(String(255), nullable=True)
 
     class Config:
@@ -38,7 +39,8 @@ class UserAnswerModel(Base):
     __tablename__ = "user_answers"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer, nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     question_id = Column(Integer, ForeignKey("questions.id"), nullable=False)
     is_correct = Column(Boolean, nullable=False)
+    quize_list_uuid: str = Column(String(255), nullable=False)
     answered_at = Column(DateTime, nullable=False)

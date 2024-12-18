@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
 
 
@@ -28,6 +28,7 @@ class Question(BaseModel):
     question_text: str
     correct_answer: str
     choices: list[str]
+    commentary: str
     tag: str | None = None
 
     class Config:
@@ -42,13 +43,23 @@ class FeedbackTemplate(BaseModel):
     class Config:
         orm_mode = True
 
-
 class UserAnswer(BaseModel):
     id: int
     user_id: int
     question_id: int
     is_correct: bool
+    quize_list_uuid: str
     answered_at: datetime
 
     class Config:
         orm_mode = True
+
+
+class UserAnswerCreate(BaseModel):
+    user_id: int = Field(description="ユーザーID")
+    child: list["QuestionCreateChild"]
+
+
+class QuestionCreateChild(BaseModel):
+    question_id: int
+    is_correct: bool

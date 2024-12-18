@@ -1,9 +1,10 @@
 from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
 from typing import Any, Generator, List
-from app import models, schemas
+from app import models
 from app.database import SessionLocal, engine
 from fastapi.middleware.cors import CORSMiddleware
+from app.schemas import Question, User, UserAnswer, UserAnswerCreate, UserCreate, UserLogin
 
 app = FastAPI()  # FastAPIインスタンスを作成
 
@@ -34,8 +35,8 @@ def get_db():
         db.close()
 
 
-@app.post("/users/", response_model=schemas.User)
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+@app.post("/users/", response_model=User)
+def create_user(user: UserCreate, db: Session = Depends(get_db)):
     db_user = (
         db.query(models.UserModel).filter(models.UserModel.email == user.email).first()
     )
@@ -50,7 +51,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return new_user
 
 
-@app.get("/users/{user_id}", response_model=schemas.User)
+@app.get("/users/{user_id}", response_model=User)
 def read_user(user_id: int, db: Session = Depends(get_db)):
     db_user = db.query(models.UserModel).filter(models.UserModel.id == user_id).first()
     if db_user is None:
@@ -58,14 +59,14 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@app.get("/users/", response_model=List[schemas.User])
+@app.get("/users/", response_model=List[User])
 def read_users(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     users = db.query(models.UserModel).offset(skip).limit(limit).all()
     return users
 
 
-@app.put("/users/{user_id}", response_model=schemas.User)
-def update_user(user_id: int, user: schemas.UserCreate, db: Session = Depends(get_db)):
+@app.put("/users/{user_id}", response_model=User)
+def update_user(user_id: int, user: UserCreate, db: Session = Depends(get_db)):
     db_user = db.query(models.UserModel).filter(models.UserModel.id == user_id).first()
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
@@ -87,7 +88,7 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
 
 
 @app.post("/login/")
-def login_user(user: schemas.UserLogin, db: Session = Depends(get_db)):
+def login_user(user: UserLogin, db: Session = Depends(get_db)):
     db_user = (
         db.query(models.UserModel).filter(models.UserModel.email == user.email).first()
     )
@@ -109,7 +110,46 @@ def reset_password(user_id: int, new_password: str, db: Session = Depends(get_db
     return {"message": "Password reset successfully"}
 
 
-@app.get("/questions/{question_id}", response_model=schemas.Question)
+@app.get("/questions/{question_id}", response_model=Question)
 def read_questions(question_id: int, db: Session = Depends(get_db)):
     questions = db.query(models.QuestionModel).offset(question_id).first()
     return questions
+
+
+@app.post("/results/", response_model=UserAnswer)
+def post_result(data:UserAnswerCreate, db: Session = Depends(get_db)):
+    db_user = db.query(models.UserAnswerModel).filter(models.UserModel.id == data.user_id).first()
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    new_question_list = []
+    for question in data.child:
+        new_question = models.UserAnswerModel(
+            user_id=data.user_id, question_id=question.question_id, is_correct=question.is_correct, quize_list_uuid=question.quize_list_uuid, answered_at=question.answered_at
+        )
+        new_question_list.append(new_question)
+    db.add(new_question)
+    db.commit()
+    db.refresh(new_question)
+    return new_question
+
+
+@app.get("/user_answers/{user_answer_id}", response_model=UserAnswer)
+def read_user_answer(user_answer_id: int, user_id: int, db: Session = Depends(get_db)):
+    user_answer = db.query(models.UserAnswerModel).filter(
+        models.UserAnswerModel.user_id == user_id
+    ).all()
+    if user_answer is None:
+        raise HTTPException(status_code=404, detail="User answer not found")
+    return user_answer
+
+
+@app.get("/user_answers/{user_answer_id}", response_model=UserAnswer)
+def read_user_answer(user_answer_id: int, user_id: int, db: Session = Depends(get_db)):
+    user_answer = (
+        db.query(models.UserAnswerModel)
+        .filter(models.UserAnswerModel.user_id == user_id)
+        .all()
+    )
+    if user_answer is None:
+        raise HTTPException(status_code=404, detail="User answer not found")
+    return user_answer
