@@ -31,6 +31,7 @@ class QuestionModel(Base):
     choices: JSON = Column(JSON, nullable=False)
     commentary = Column(Text, nullable=False)
     tag = Column(String(255), nullable=True)
+    # tag_id = Column(Integer, ForeignKey("tags.id"), nullable=True)
 
     class Config:
         orm_mode = True
@@ -53,3 +54,21 @@ class UserAnswerModel(Base):
     is_correct = Column(Boolean, nullable=False)
     quize_list_uuid: str = Column(String(255), nullable=False)
     answered_at = Column(DateTime, nullable=False)
+
+
+class UserSessionModel(Base):
+    __tablename__ = "user_sessions"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    token = Column(String(255), nullable=False)
+
+
+# class UserTagModel(Base):
+#     __tablename__ = "user_tags"
+
+#     id = Column(Integer, primary_key=True, autoincrement=True)
+#     tag = Column(String(255), nullable=False)
+
+#     class Config:
+#         orm_mode = True

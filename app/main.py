@@ -1,6 +1,6 @@
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import uuid
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import Cookie, FastAPI, HTTPException, Depends, Response
 from sqlalchemy.orm import Session
 from typing import Any, Generator, List
 from app import models
@@ -8,6 +8,7 @@ from app.database import SessionLocal, engine
 from fastapi.middleware.cors import CORSMiddleware
 from app.schemas import (
     Question,
+    SessionResponse,
     User,
     UserAnswer,
     UserAnswerCreate,
@@ -20,14 +21,15 @@ app = FastAPI()  # FastAPIインスタンスを作成
 
 origins = [
     "http://localhost:5173",
+    "http://localhost:8000",
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["Content-Type", "Set-Cookie"],
 )
 
 
@@ -96,7 +98,7 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
     return {"message": "User deleted successfully"}
 
 
-@app.post("/login/")
+@app.post("/login/", response_model=SessionResponse)
 def login_user(user: UserLogin, db: Session = Depends(get_db)):
     db_user = (
         db.query(models.UserModel).filter(models.UserModel.email == user.email).first()
@@ -105,7 +107,12 @@ def login_user(user: UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
     if db_user.password != user.password:
         raise HTTPException(status_code=404, detail="Password is incorrect")
-    return db_user
+    token = uuid.uuid4().hex
+    new_session = models.UserSessionModel(user_id=db_user.id, token=token)
+    db.add(new_session)
+    db.commit()
+    db.refresh(new_session)
+    return SessionResponse(token=token)
 
 
 @app.post("/login/{user_id}/reset_password")
@@ -125,13 +132,25 @@ def read_questions(question_id: int, db: Session = Depends(get_db)):
     return questions
 
 
+# 問題をhistoryに送る
 @app.post(
-    "/results/", response_model=UserAnswer, description="ユーザーの回答を登録する"
+    "/results/",
+    response_model=UserAnswer,
+    description="ユーザーの回答を登録する",
 )
 def post_result(data: UserAnswerCreate, db: Session = Depends(get_db)):
+    db_session = db.query(models.UserSessionModel).filter(
+        models.UserSessionModel.token == data.token
+    )
+    if db_session is None:
+        raise HTTPException(status_code=404, detail="Session not found")
+    session = db_session.first()
+    if session is None:
+        raise HTTPException(status_code=404, detail="Session not found")
+
     db_user = (
         db.query(models.UserAnswerModel)
-        .filter(models.UserModel.id == data.user_id)
+        .filter(models.UserModel.id == session.user_id)
         .first()
     )
     if db_user is None:
@@ -139,7 +158,7 @@ def post_result(data: UserAnswerCreate, db: Session = Depends(get_db)):
     quize_list_uuid = uuid.uuid5()
     for question in data.child:
         new_question = models.UserAnswerModel(
-            user_id=data.user_id,
+            user_id=session.user_id,
             question_id=question.question_id,
             is_correct=question.is_correct,
             quize_list_uuid=quize_list_uuid,
@@ -151,6 +170,7 @@ def post_result(data: UserAnswerCreate, db: Session = Depends(get_db)):
     return new_question
 
 
+# 日付の表示だけのAPIと
 @app.get("/user_answers/{user_answer_id}", response_model=UserAnswer)
 def read_user_answer(user_answer_id: int, user_id: int, db: Session = Depends(get_db)):
     user_answer = (
