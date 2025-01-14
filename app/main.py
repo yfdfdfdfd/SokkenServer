@@ -137,10 +137,9 @@ def read_questions(question_id: int, db: Session = Depends(get_db)):
     return questions
 
 
-# 問題をhistoryに送る
 @app.post(
     "/results/",
-    description="ユーザーの回答を登録する",
+    description="ユーザーの回答を送信する",
 )
 def post_result(data: UserAnswerCreate, db: Session = Depends(get_db)):
     db_session = db.query(models.UserSessionModel).filter(
@@ -164,7 +163,6 @@ def post_result(data: UserAnswerCreate, db: Session = Depends(get_db)):
         new_question = models.UserAnswerModel(
             user_id=session.user_id,
             question_id=question.question_id,
-            commentary=question.commentary,
             is_correct=question.is_correct,
             quize_list_uuid=quize_list_uuid,
             answered_at=datetime.now(),
@@ -175,24 +173,15 @@ def post_result(data: UserAnswerCreate, db: Session = Depends(get_db)):
     db.refresh(new_question)
 
 
-# 日付の表示だけのAPIと
-@app.get("/user_answers/{user_answer_id}", response_model=UserAnswer)
-def read_user_answer(user_answer_id: int, user_id: int, db: Session = Depends(get_db)):
-    user_answer = (
-        db.query(models.UserAnswerModel)
-        .filter(models.UserAnswerModel.user_id == user_id)
-        .all()
-    )
-    if user_answer is None:
-        raise HTTPException(status_code=404, detail="User answer not found")
-    return user_answer
+# --日付の表示だけのと詳細表示（問題一問一問の表示）のページでAPIを分ける-- #
 
 
-@app.get("/user_answers/{user_answer_id}", response_model=UserAnswer)
-def read_user_answer(user_answer_id: int, user_id: int, db: Session = Depends(get_db)):
+# quize_list_uuidを使って問題を分けて表示する
+@app.get("/user_history/", response_model=UserAnswer)
+def read_user_answer(quize_list_uuid: str, db: Session = Depends(get_db)):
     user_answer = (
         db.query(models.UserAnswerModel)
-        .filter(models.UserAnswerModel.user_id == user_id)
+        .filter(models.UserAnswerModel.quize_list_uuid == quize_list_uuid)
         .all()
     )
     if user_answer is None:

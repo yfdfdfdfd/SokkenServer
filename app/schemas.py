@@ -70,7 +70,6 @@ class UserAnswer(BaseModel):
     id: int
     user_id: int
     question_id: int
-    commentary: str
     is_correct: bool
     quize_list_uuid: str
     answered_at: datetime
@@ -85,6 +84,19 @@ class UserAnswerCreate(BaseModel):
 
 
 class QuestionCreateChild(BaseModel):
-    question_id: int
-    commentary: str
+    question_id: int = Field(description="問題ID")
     is_correct: Optional[bool] = Field(description="正解かどうか")
+
+
+# class UserAnswerResponse(BaseModel):
+#     id: int
+#     user_id: int
+#     question_id: int
+#     question_text: str
+#     commentary: str
+#     correct_answer: str
+#     is_correct: Optional[bool]
+#     answered_at: datetime
+
+#     class Config:
+#         orm_mode = True
