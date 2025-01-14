@@ -4,6 +4,7 @@ from fastapi import Cookie, FastAPI, HTTPException, Depends, Response
 from sqlalchemy.orm import Session
 from typing import Any, Generator, List
 from app import models
+from app import schemas
 from app.database import SessionLocal, engine
 from fastapi.middleware.cors import CORSMiddleware
 from app.schemas import (
@@ -12,6 +13,8 @@ from app.schemas import (
     User,
     UserAnswer,
     UserAnswerCreate,
+    UserAnswerResponse,
+    UserAnswerResponseChild,
     UserCreate,
     UserLogin,
 )
@@ -32,8 +35,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE"],
-    allow_headers=["Content-Type", "Set-Cookie"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -145,8 +148,6 @@ def post_result(data: UserAnswerCreate, db: Session = Depends(get_db)):
     db_session = db.query(models.UserSessionModel).filter(
         models.UserSessionModel.token == data.token
     )
-    if db_session is None:
-        raise HTTPException(status_code=404, detail="Session not found")
     session = db_session.first()
     if session is None:
         raise HTTPException(status_code=404, detail="Session not found")
@@ -174,10 +175,39 @@ def post_result(data: UserAnswerCreate, db: Session = Depends(get_db)):
 
 
 # --日付の表示だけのと詳細表示（問題一問一問の表示）のページでAPIを分ける-- #
+@app.get("/user_history_uuid", response_model=UserAnswerResponse)
+def read_user_answer(token: str, db: Session = Depends(get_db)):
+    session = (
+        db.query(models.UserSessionModel)
+        .filter(models.UserSessionModel.token == token)
+        .first()
+    )
+
+    if session is None:
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    user_answer = (
+        db.query(models.UserAnswerModel)
+        .filter(models.UserAnswerModel.user_id == session.user_id)
+        .distinct(models.UserAnswerModel.quize_list_uuid)
+    )
+    if user_answer is None:
+        raise HTTPException(status_code=404, detail="User answer not found")
+
+    # モデルからスキーマに変換
+    child = []
+    for answer in user_answer:
+        child.append(
+            UserAnswerResponseChild(
+                quize_list_uuid=answer.quize_list_uuid,
+                answered_at=answer.answered_at,
+            )
+        )
+    return UserAnswerResponse(child=child)
 
 
 # quize_list_uuidを使って問題を分けて表示する
-@app.get("/user_history/", response_model=UserAnswer)
+@app.get("/user_history_by_uuid/", response_model=UserAnswer)
 def read_user_answer(quize_list_uuid: str, db: Session = Depends(get_db)):
     user_answer = (
         db.query(models.UserAnswerModel)

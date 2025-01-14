@@ -100,3 +100,18 @@ class QuestionCreateChild(BaseModel):
 
 #     class Config:
 #         orm_mode = True
+
+
+class UserAnswerResponse(BaseModel):
+    child: list["UserAnswerResponseChild"]
+
+    class Config:
+        orm_mode = True
+
+
+class UserAnswerResponseChild(BaseModel):
+    quize_list_uuid: str
+    answered_at: datetime
+
+    class Config:
+        orm_mode = True
