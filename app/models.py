@@ -51,7 +51,8 @@ class UserAnswerModel(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     question_id = Column(Integer, ForeignKey("questions.id"), nullable=False)
-    is_correct = Column(Boolean, nullable=False)
+    commentary = Column(Text, nullable=False)
+    is_correct = Column(Boolean, nullable=True)
     quize_list_uuid: str = Column(String(255), nullable=False)
     answered_at = Column(DateTime, nullable=False)
 

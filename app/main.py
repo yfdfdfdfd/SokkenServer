@@ -15,6 +15,10 @@ from app.schemas import (
     UserCreate,
     UserLogin,
 )
+import logging
+
+logging.basicConfig()
+logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
 
 app = FastAPI()  # FastAPIインスタンスを作成
 
@@ -98,6 +102,7 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
     return {"message": "User deleted successfully"}
 
 
+# レスポンスモデルはreturnモデルと同じものを使う
 @app.post("/login/", response_model=SessionResponse)
 def login_user(user: UserLogin, db: Session = Depends(get_db)):
     db_user = (
@@ -135,7 +140,6 @@ def read_questions(question_id: int, db: Session = Depends(get_db)):
 # 問題をhistoryに送る
 @app.post(
     "/results/",
-    response_model=UserAnswer,
     description="ユーザーの回答を登録する",
 )
 def post_result(data: UserAnswerCreate, db: Session = Depends(get_db)):
@@ -149,25 +153,26 @@ def post_result(data: UserAnswerCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Session not found")
 
     db_user = (
-        db.query(models.UserAnswerModel)
+        db.query(models.UserModel)
         .filter(models.UserModel.id == session.user_id)
         .first()
     )
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
-    quize_list_uuid = uuid.uuid5()
+    quize_list_uuid = str(uuid.uuid4())
     for question in data.child:
         new_question = models.UserAnswerModel(
             user_id=session.user_id,
             question_id=question.question_id,
+            commentary=question.commentary,
             is_correct=question.is_correct,
             quize_list_uuid=quize_list_uuid,
-            answered_at=datetime.datetime.now(),
+            answered_at=datetime.now(),
         )
         db.add(new_question)
+        db.flush()
     db.commit()
     db.refresh(new_question)
-    return new_question
 
 
 # 日付の表示だけのAPIと

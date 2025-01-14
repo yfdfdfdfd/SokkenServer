@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel, Field
 from datetime import datetime
 
@@ -69,6 +70,7 @@ class UserAnswer(BaseModel):
     id: int
     user_id: int
     question_id: int
+    commentary: str
     is_correct: bool
     quize_list_uuid: str
     answered_at: datetime
@@ -84,4 +86,5 @@ class UserAnswerCreate(BaseModel):
 
 class QuestionCreateChild(BaseModel):
     question_id: int
-    is_correct: bool
+    commentary: str
+    is_correct: Optional[bool] = Field(description="正解かどうか")
