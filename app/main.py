@@ -208,7 +208,15 @@ def read_user_answer(token: str, db: Session = Depends(get_db)):
 
 # quize_list_uuidを使って問題を分けて表示する
 @app.get("/user_history_by_uuid/", response_model=UserAnswer)
-def read_user_answer(quize_list_uuid: str, db: Session = Depends(get_db)):
+def read_user_answer(quize_list_uuid: str, token: str, db: Session = Depends(get_db)):
+    session = (
+        db.query(models.UserSessionModel)
+        .filter(models.UserSessionModel.token == token)
+        .first()
+    )
+    if session is None:
+        raise HTTPException(status_code=404, detail="Session not found")
+
     user_answer = (
         db.query(models.UserAnswerModel)
         .filter(models.UserAnswerModel.quize_list_uuid == quize_list_uuid)
