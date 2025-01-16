@@ -4,7 +4,6 @@ from fastapi import Cookie, FastAPI, HTTPException, Depends, Response
 from sqlalchemy.orm import Session
 from typing import Any, Generator, List
 from app import models
-from app import schemas
 from app.database import SessionLocal, engine
 from fastapi.middleware.cors import CORSMiddleware
 from app.schemas import (
@@ -13,6 +12,8 @@ from app.schemas import (
     User,
     UserAnswer,
     UserAnswerCreate,
+    UserAnswerDetailResponse,
+    UserAnswerDetailResponseChild,
     UserAnswerResponse,
     UserAnswerResponseChild,
     UserCreate,
@@ -207,7 +208,7 @@ def read_user_answer(token: str, db: Session = Depends(get_db)):
 
 
 # quize_list_uuidを使って問題を分けて表示する
-@app.get("/user_history_by_uuid/", response_model=UserAnswer)
+@app.get("/user_history_by_uuid/", response_model=UserAnswerDetailResponse)
 def read_user_answer(quize_list_uuid: str, token: str, db: Session = Depends(get_db)):
     session = (
         db.query(models.UserSessionModel)
@@ -217,11 +218,42 @@ def read_user_answer(quize_list_uuid: str, token: str, db: Session = Depends(get
     if session is None:
         raise HTTPException(status_code=404, detail="Session not found")
 
-    user_answer = (
-        db.query(models.UserAnswerModel)
+    user_answers = (
+        db.query(models.UserAnswerModel, models.QuestionModel)
+        .join(
+            models.QuestionModel,
+            models.UserAnswerModel.question_id == models.QuestionModel.id,
+        )
         .filter(models.UserAnswerModel.quize_list_uuid == quize_list_uuid)
         .all()
     )
-    if user_answer is None:
+    if user_answers is None:
         raise HTTPException(status_code=404, detail="User answer not found")
-    return user_answer
+
+    # print(user_answers)
+    # print(quize_list_uuid)
+
+    # モデルからスキーマに変換
+    child = []
+    for answer, question in user_answers:
+        # UserAnswerDetailResponseChildの右辺がanyにならないように
+        assert isinstance(answer, models.UserAnswerModel)
+        assert isinstance(question, models.QuestionModel)
+        # print(answer.id)
+
+        child.append(
+            UserAnswerDetailResponseChild(
+                id=answer.id,
+                user_id=answer.user_id,
+                question_id=answer.question_id,
+                question_text=question.question_text,
+                correct_answer=question.correct_answer,
+                choices=question.choices,
+                commentary=question.commentary,
+                tag=question.tag,
+                is_correct=answer.is_correct,
+                quize_list_uuid=answer.quize_list_uuid,
+                answered_at=answer.answered_at,
+            )
+        )
+    return UserAnswerDetailResponse(child=child)

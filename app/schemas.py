@@ -88,18 +88,27 @@ class QuestionCreateChild(BaseModel):
     is_correct: Optional[bool] = Field(description="正解かどうか")
 
 
-# class UserAnswerResponse(BaseModel):
-#     id: int
-#     user_id: int
-#     question_id: int
-#     question_text: str
-#     commentary: str
-#     correct_answer: str
-#     is_correct: Optional[bool]
-#     answered_at: datetime
+class UserAnswerDetailResponse(BaseModel):
 
-#     class Config:
-#         orm_mode = True
+    child: list["UserAnswerDetailResponseChild"]
+
+    class Config:
+        orm_mode = True
+
+
+class UserAnswerDetailResponseChild(BaseModel):
+    id: int
+    user_id: int
+    question_id: int
+    question_text: str
+    correct_answer: str
+    choices: list[str]
+    commentary: str
+    tag: str | None = None
+    is_correct: bool
+
+    class Config:
+        orm_mode = True
 
 
 class UserAnswerResponse(BaseModel):
