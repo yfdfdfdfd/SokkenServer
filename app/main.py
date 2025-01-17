@@ -190,9 +190,11 @@ def read_user_answer(token: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Session not found")
 
     user_answer = (
-        db.query(models.UserAnswerModel)
+        db.query(
+            models.UserAnswerModel.quize_list_uuid, models.UserAnswerModel.answered_at
+        )
         .filter(models.UserAnswerModel.user_id == session.user_id)
-        .distinct(models.UserAnswerModel.quize_list_uuid)
+        .distinct()
     )
     if user_answer is None:
         raise HTTPException(status_code=404, detail="User answer not found")
