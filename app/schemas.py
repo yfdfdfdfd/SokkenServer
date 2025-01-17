@@ -105,7 +105,8 @@ class UserAnswerDetailResponseChild(BaseModel):
     choices: list[str]
     commentary: str
     tag: str | None = None
-    is_correct: bool
+    # 　未回答Noneを追加
+    is_correct: bool | None
 
     class Config:
         orm_mode = True
