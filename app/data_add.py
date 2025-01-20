@@ -1,3 +1,4 @@
+from pyexpat import model
 from models import QuestionModel
 from database import SessionLocal, engine
 
@@ -43,22 +44,8 @@ model3 = QuestionModel(
     tag="深層学習",
 )
 
-# db = SessionLocal()
-# model4 = QuestionModel(
-#     question_text="",
-#     correct_answer="",
-#     choices=[
-#         "",
-#         "",
-#         "",
-#         "",
-#     ],
-#     commentary="",
-#     tag="深層学習",
-# )
-
 db = SessionLocal()
-model5 = QuestionModel(
+model4 = QuestionModel(
     question_text="勾配消失問題は何に関連していますか？",
     correct_answer="b.ニューラルネットワークの深さに関連する問題",
     choices=[
@@ -242,7 +229,7 @@ model16 = QuestionModel(
 db = SessionLocal()
 model17 = QuestionModel(
     question_text="以下の文章を読み、(ア)~(イ)の組み合わせとして、最も適切な選択肢を1つ選べニューラルネットワークの中では、予測誤差に関する情報を参考にして重みの更新を行っており、誤差に関する情報はネットワークの中で、(ア)していく。この仕組みに由来するネットワークの学習の問題は(イ)である。",
-    correct_answer="",
+    correct_answer="c.(ア)出力層から入力層まで伝播、(イ)勾配消失問題",
     choices=[
         "a.(ア)出力層から入力層まで伝播、(イ)誤差消失問題",
         "b.(ア)入力層から出力層まで伝播、(イ)重み衝突問題",
@@ -746,7 +733,7 @@ model52 = QuestionModel(
 db = SessionLocal()
 model53 = QuestionModel(
     question_text="以下の文章を読み、(ア)～(ウ)に当てはまる組み合わせの選択肢を1つ選べ。過学習を抑える手法のひとつに正則化がある。(ア)は不要な入力に対する重みが0になるようにはたらく。(イ)は重みが大きくなりすぎないようにすることで滑らかなモデルをつくる。(ア)と(イ)を組み合わせて特に線形回帰に適合した場合に(ウ)という。",
-    correct_answer="",
+    correct_answer="c.(ア)L1正則化、(イ)L2正則化、(ウ)Elastic Net",
     choices=[
         "a.(ア)L0正則化、(イ)L1正則化、(ウ)Ridge Net",
         "b.(ア)L1正則化、(イ)L2正則化、(ウ)Ridge Net",
@@ -1726,7 +1713,7 @@ model122 = QuestionModel(
 db = SessionLocal()
 model123 = QuestionModel(
     question_text="次の問題に当てはまる言葉を選択肢から１つ選べ。学習用データ、プログラム、データベース、仕様書、及び、AIによる成果物等のデータは「営業秘密」として保護される場合がある。転職、社外への発表、販売、情報提供、又は、他者との共同開発等で営業秘密を扱う場合には、(  )に該当する行為が注意する必要がある。例えば、(  )となる行為は、不正取得、不正使用、又は、不正開示等がある。",
-    correct_answer="",
+    correct_answer="d.不正競争",
     choices=[
         "a.特許権侵害",
         "b.著作権侵害",
@@ -1738,7 +1725,7 @@ model123 = QuestionModel(
 )
 
 db = SessionLocal()
-model123 = QuestionModel(
+model124 = QuestionModel(
     question_text="次の( )に当てはまる言葉を選択肢から1つ選べ。学習用データ等のデータ、 及び、 プログラムは特許権又は( )等で法的に保護されている場合がある。他者の特許発明又は( )を権利者に無断で実施すると民事・刑事上の請求又は罰則を受ける場合があるため注意する。発明を特許出願をして特許権を取得して保護を図る、及び、 データを( )として保護を図る方法等がある。( )として保護の客体となるには、有用性、 秘密管理性、及び、 非公知性等を備える必要がある。",
     correct_answer="b.営業秘密",
     choices=[
@@ -1752,7 +1739,7 @@ model123 = QuestionModel(
 )
 
 db = SessionLocal()
-model124 = QuestionModel(
+model125 = QuestionModel(
     question_text="次の( )に当てはまる言葉を選択肢から1つ選べ。学習等にデータを使用、 又は、 他者へデータを提供する場合には個人情報の扱いに注意する必要がある。例えば、 個人情報を示す元のデータを特定の個人を識別できないように加工し、 個人情報を復元できない状態にした 「匿名加工情報」にする必要等 がある。匿名加工情報にするには、(  )が必要となる。",
     correct_answer="c.個人情報に含まれる個人識別符号の全部を削除",
     choices=[
@@ -1766,7 +1753,7 @@ model124 = QuestionModel(
 )
 
 db = SessionLocal()
-model125 = QuestionModel(
+model126 = QuestionModel(
     question_text="次の( )に当てはまる言葉を選択肢から1つ選べ。学習等に用いるデータを他者から提供してもらう場合、又は、共有する場合にはデータの利用に関して契約を結ぶ。 外部に漏洩したくない情報を扱う場合には、契約で(   )を課す。 契約後、(   )がある者のみで営業秘密等を扱うように配慮する必要がある。",
     correct_answer="a.秘密保持義務",
     choices=[
@@ -1780,7 +1767,7 @@ model125 = QuestionModel(
 )
 
 db = SessionLocal()
-model126 = QuestionModel(
+model127 = QuestionModel(
     question_text="次の( )に当てはまる言葉を選択肢から1つ選べ。学習用データ、プログラム、データベース、 仕様書、及び、AIによる成果物等のデータは法律で保護されている場合がある。他者と共同して開発をする場合等には、オープンにする客体と、秘密にする客体とで保護方法を使い分ける必要がある。オープンにするプログラム等は特許出願をして特許権を取得して保護を図る。一方で、社外へ開示しないデータ等は(   )として保護を図る方法等がある。(   )として保護の客体となるには、有用性、秘密管理性、及び、非公知性等を備える必要がある。",
     correct_answer="d.営業秘密",
     choices=[
@@ -1794,7 +1781,7 @@ model126 = QuestionModel(
 )
 
 db = SessionLocal()
-model127 = QuestionModel(
+model128 = QuestionModel(
     question_text="次の( )に当てはまる言葉を選択肢から1つ選べ。学習用データ、プログラム、データベース、仕様書、及び、AIによる成果物等のデータは法律で保護されている場合がある法的に技術等の知的財産を保護しようとする場合には、特許出願をして特許権を取得して保護を図る、及び、(   )として保護を図る方法等がある(   )として保護の客体となるには、有用性、秘密管理性、及び、非公知性等を備える必要がある。",
     correct_answer="b.営業秘密",
     choices=[
@@ -1808,7 +1795,7 @@ model127 = QuestionModel(
 )
 
 db = SessionLocal()
-model128 = QuestionModel(
+model129 = QuestionModel(
     question_text="次の( )に当てはまる言葉を選択肢から1つ選べ。学習用のデータ等は大量のデータを効率よく収集する必要がある。官民データ活用推進基本法により、(   )はオープンデータに取り組むことが義務づけされた。オープンデータ等のデータをうまく利用するのが求められる。",
     correct_answer="d.国及び地方公共団体",
     choices=[
@@ -1822,7 +1809,7 @@ model128 = QuestionModel(
 )
 
 db = SessionLocal()
-model129 = QuestionModel(
+model130 = QuestionModel(
     question_text="個人情報を保護するための対策について、最も適切な選択肢を1つ選べ。",
     correct_answer="",
     choices=[
@@ -1836,7 +1823,7 @@ model129 = QuestionModel(
 )
 
 db = SessionLocal()
-model130 = QuestionModel(
+model131 = QuestionModel(
     question_text="個人データの扱い方について、最も適切な選択肢を1つ選べ。",
     correct_answer="c.故人に関する情報をその人の死後に取得し学習に利用した場合は、個人情報保護法が適用されない。",
     choices=[
@@ -1850,7 +1837,7 @@ model130 = QuestionModel(
 )
 
 db = SessionLocal()
-model131 = QuestionModel(
+model132 = QuestionModel(
     question_text="個人データの扱い方として、最も適切な選択肢を1つ選べ。",
     correct_answer="b.要配慮個人情報は原則として、本人の同意なく取得することが禁止されている。",
     choices=[
@@ -1864,7 +1851,7 @@ model131 = QuestionModel(
 )
 
 db = SessionLocal()
-model132 = QuestionModel(
+model133 = QuestionModel(
     question_text="個人情報保護法の説明として、最も適切な選択肢を1つ選べ。",
     correct_answer="b.匿名加工情報を作成した場合、その情報に含まれる個人に関する情報の項目を公表する義務がある。",
     choices=[
@@ -1878,7 +1865,7 @@ model132 = QuestionModel(
 )
 
 db = SessionLocal()
-model133 = QuestionModel(
+model134 = QuestionModel(
     question_text="個人情報の利用に関して、最も適切な選択肢を1つ選べ。",
     correct_answer="a.個人情報取扱事業者は、オプトアウト制度を利用することにより、事前に本人の同意を得なくても、個人データを第三者に提供することが可能なケースがある。",
     choices=[
@@ -1892,7 +1879,7 @@ model133 = QuestionModel(
 )
 
 db = SessionLocal()
-mode134 = QuestionModel(
+model135 = QuestionModel(
     question_text="経済産業省により公表されている「カメラ画像利活用ガイドブックver3.0」について、最も適切な選択肢を1つ選べ。",
     correct_answer="c.カメラ画像から形状認識技術などを用いて通行人の形のみ判別し、顔の特徴などを識別しない場合、通行人の数を計測したカウントデータは個人情報としてみなされない。",
     choices=[
@@ -1906,7 +1893,7 @@ mode134 = QuestionModel(
 )
 
 db = SessionLocal()
-mode135 = QuestionModel(
+model136 = QuestionModel(
     question_text="データ活用の例として、最も不適切な選択肢を1つ選べ。",
     correct_answer="d.安心して子供を公園で遊ばせられるように、自治体が公園の防犯用監視カメラの画像を希望する保護者のみ公開した。",
     choices=[
@@ -1920,7 +1907,7 @@ mode135 = QuestionModel(
 )
 
 db = SessionLocal()
-mode136 = QuestionModel(
+model137 = QuestionModel(
     question_text="AIの成果物と著作物の関係について、最も不適切な選択肢を1つ選べ。",
     correct_answer="d.プログラムの作成の手段であるプログラム言語、プロトコール、アルゴリズム、規約及び解法は、「プログラム著作物」に相当する。",
     choices=[
@@ -1934,7 +1921,7 @@ mode136 = QuestionModel(
 )
 
 db = SessionLocal()
-mode136 = QuestionModel(
+model138 = QuestionModel(
     question_text="著作権法に関する記述として、最も適切な選択肢を1つ選べ。",
     correct_answer="d.個人の著作者の著作権が存続する期間は、原則として著作者の死後70年間である。",
     choices=[
@@ -1948,35 +1935,21 @@ mode136 = QuestionModel(
 )
 
 db = SessionLocal()
-mode137 = QuestionModel(
-    question_text="",
-    correct_answer="",
-    choices=[
-        "",
-        "",
-        "",
-        "",
-    ],
-    commentary="",
-    tag="法規・倫理",
-)
-
-db = SessionLocal()
-mode138 = QuestionModel(
+model139 = QuestionModel(
     question_text="(ア)と(イ)にあてはまる組み合わせとして、最も適切な選択肢を1つ選べ。AI開発プロジェクトにおいて、(ア)およびその生成に用いた(イ)の保護が契約の重要な論点となることが多い。",
-    correct_answer="c.(ア)学習済みモデル　(イ)学習用データセット",
+    correct_answer="c.(ア)学習済みモデル、(イ)学習用データセット",
     choices=[
-        "a.(ア)学習済みモデル　(イ)取扱説明書",
-        "b.(ア)ソースコード　(イ)プログラミング言語",
-        "c.(ア)学習済みモデル　(イ)学習用データセット",
-        "d.(ア)ソースコード　(イ)プロトコル",
+        "a.(ア)学習済みモデル、(イ)取扱説明書",
+        "b.(ア)ソースコード、(イ)プログラミング言語",
+        "c.(ア)学習済みモデル、(イ)学習用データセット",
+        "d.(ア)ソースコード、(イ)プロトコル",
     ],
     commentary="選択肢cが正しい解答である。特許権や著作権など知的財産権の保護は、AI開発の契約において必須の課題です。学習済みモデルなどの成果物について、ユーザーと開発者の間で誰がどのような権利を持つのかが論点となります。選択肢cの学習用データセットとは、生データを分析や機械学習に使いやすい形に変換した二次元な加工データです。このような変換または加工の例として、欠損値の処理、正解ラベルの付与、画像のリサイズなどが挙げられます。学習済みモデルとは、学習用データセットを用いて訓練を行った後の推論プログラムのことです。学習で得られた学習済みパラメータが組み込まれており、新しく入力されたデータに対して一定の制度で推論や予測ができます。「学習済みモデル」は、大きく分けてプログラムと学習パラメータの2つの部分から成り立ちます。プログラムには十分な創作性が認められる場合、著作権で保護される対象にあります。学習済みパラメータは、人間による「創作意図」と「創作的寄与」を示せば、コンピュータを道具として創作した著作物として肯定される見解があります。",
     tag="法規・倫理",
 )
 
 db = SessionLocal()
-model139 = QuestionModel(
+model140 = QuestionModel(
     question_text="学習を終えた機械学習のモデルを「学習済みモデル」と呼ぶ。機械学習をビジネスに利活用する際に、学習済みモデルの権利を適切に保護しなければならないが、これについて、最も不適切な選択肢を1つ選べ。",
     correct_answer="c.日本の法律では、機械学習のために他者の著作物を複製することは原則として認められていない。",
     choices=[
@@ -1990,7 +1963,7 @@ model139 = QuestionModel(
 )
 
 db = SessionLocal()
-model140 = QuestionModel(
+model141 = QuestionModel(
     question_text="著作権法に関する説明として、最も適切なものを1つ選べ。",
     correct_answer="d.共同著作権が第三者によって無断で利用された場合、共同者全員の同意が得られなくても差し止めを請求できる。",
     choices=[
@@ -2004,7 +1977,7 @@ model140 = QuestionModel(
 )
 
 db = SessionLocal()
-model141 = QuestionModel(
+model142 = QuestionModel(
     question_text="2019年1月に実施された改正著作権法にもとづいて、著作物を学習用データとして取り扱う時の条件として、最も適切なものを1つ選べ。",
     correct_answer="d.非営利目的で他社の著作物を複製し加工した成果物が、著作権の利益を不当に害する場合は、著作権侵害に当たる可能性がある。",
     choices=[
@@ -2018,7 +1991,7 @@ model141 = QuestionModel(
 )
 
 db = SessionLocal()
-model142 = QuestionModel(
+model143 = QuestionModel(
     question_text="特許権を取得することにより、自らの特許発明の実施を独占できるとともに、第三者による特許発明の無断実施を排除できるようになる。特許法において、「特許発明の実施をする」に該当する内容として、最も不適切な選択肢を1つ選べ。",
     correct_answer="b.新しい発明を行う。",
     choices=[
@@ -2032,7 +2005,7 @@ model142 = QuestionModel(
 )
 
 db = SessionLocal()
-model143 = QuestionModel(
+model144 = QuestionModel(
     question_text="特許権に関する説明として、最も適切なものを1つ選べ。",
     correct_answer="d.特許制度の目的の1つは、所有者を明確にしつつ、社会の中で発明を活用しやすい仕組みを整えることである。",
     choices=[
@@ -2046,7 +2019,7 @@ model143 = QuestionModel(
 )
 
 db = SessionLocal()
-model144 = QuestionModel(
+model145 = QuestionModel(
     question_text="特許を受ける権利に関して、最も不適切な選択肢を1つ選べ。",
     correct_answer="a.通常実施権を持つ者のみが、特許権侵害に対する差し止めを請求できる。",
     choices=[
@@ -2060,7 +2033,7 @@ model144 = QuestionModel(
 )
 
 db = SessionLocal()
-model145 = QuestionModel(
+model146 = QuestionModel(
     question_text="特許権の取得に関する説明として、最も適切なものを1つ選べ。",
     correct_answer="a.特許法上、複数人が同じ発明をほぼ同時に進めている場合、一番先に発明の出願をした人に特許が認められる。",
     choices=[
@@ -2074,7 +2047,7 @@ model145 = QuestionModel(
 )
 
 db = SessionLocal()
-model146 = QuestionModel(
+model147 = QuestionModel(
     question_text="特許法の説明に関して、最も適切な選択肢を1つ選べ。",
     correct_answer="b.特許を受ける権利は、発明の完成と同時に発生する。",
     choices=[
@@ -2088,7 +2061,7 @@ model146 = QuestionModel(
 )
 
 db = SessionLocal()
-model147 = QuestionModel(
+model148 = QuestionModel(
     question_text="不正競争防止法の内容について、最も適切な選択肢を1つ選べ。",
     correct_answer="a.顧客リストの盗用は不正競争行為に該当する。",
     choices=[
@@ -2102,7 +2075,7 @@ model147 = QuestionModel(
 )
 
 db = SessionLocal()
-model148 = QuestionModel(
+model149 = QuestionModel(
     question_text="不正競争防止法の各項目に関して、最も適切な選択肢を1つ選べ。",
     correct_answer="c.営業秘密を含む情報は、どの従業員からみても秘密にしたいことが明確に分かる程度の管理措置が求められている。",
     choices=[
@@ -2116,7 +2089,7 @@ model148 = QuestionModel(
 )
 
 db = SessionLocal()
-model149 = QuestionModel(
+model150 = QuestionModel(
     question_text="知的財産権に関して、最も不適切な選択肢を1つ選べ。",
     correct_answer="a.知的財産権と著作権の違いとは、前者は権利を取得するために申請や登録など一定の手続きが必要であるのに対し、後者は著作物が創られた時点で付与されること。",
     choices=[
@@ -2130,7 +2103,7 @@ model149 = QuestionModel(
 )
 
 db = SessionLocal()
-model150 = QuestionModel(
+model151 = QuestionModel(
     question_text="AIをビジネスに活用する上で、データやモデルの知的財産権を正しく理解することが重要である。最も適切な選択肢を1つ選べ。",
     correct_answer="d.業として特定の者に提供する情報であり、電磁的方法により相当量蓄積されたデータは、不正競争防止法の限定提供データとして保護の対象になることがある。",
     choices=[
@@ -2144,7 +2117,7 @@ model150 = QuestionModel(
 )
 
 db = SessionLocal()
-model151 = QuestionModel(
+model152 = QuestionModel(
     question_text="学習用データセットを用意するのにあたっての留意点について、不適切な選択肢を1つ選べ。",
     correct_answer="d.第三者から受領した個人情報を用いてデータセットを作成する場合、その個人情報が取得された経緯を当事者同士で共有することはプライバシー違反に該当する。",
     choices=[
@@ -2158,7 +2131,7 @@ model151 = QuestionModel(
 )
 
 db = SessionLocal()
-model152 = QuestionModel(
+model153 = QuestionModel(
     question_text="ディープフェイクの説明として、最も適切な選択肢を1つ選べ。",
     correct_answer="d.2つの画像(動画)を生成することは、ディープフェイクを用いることで実現できる。",
     choices=[
@@ -2172,7 +2145,7 @@ model152 = QuestionModel(
 )
 
 db = SessionLocal()
-model153 = QuestionModel(
+model154 = QuestionModel(
     question_text="ディープフェイクの説明として、最も不適切な選択肢を1つ選べ。",
     correct_answer="b.社会に脅威を及ぼす可能性が高い技術であるため、日本国内の一部の自治体はその利用を完全に禁止している。",
     choices=[
@@ -2186,7 +2159,7 @@ model153 = QuestionModel(
 )
 
 db = SessionLocal()
-model154 = QuestionModel(
+model155 = QuestionModel(
     question_text="捏造や改ざんなど不正なデータ処理に当たる行為として、最も当てはまる選択肢を1つ選べ。",
     correct_answer="b.店で実施したキャンペーンの効果を検証する分析業務を引き受けた。効果の有無を分かりやすく説明できた方が将来の案件の受注につながるため、全データのうち効果を説明しやすい期間のみ取り出して、それを使って検証を行った。報告書ではその期間を選んだ理由を明記せず、検証結果の説明だけを記述した。",
     choices=[
@@ -2200,7 +2173,7 @@ model154 = QuestionModel(
 )
 
 db = SessionLocal()
-model155 = QuestionModel(
+model156 = QuestionModel(
     question_text="データ汚染(Data Poisoning)に関して、最も不適切な選択肢を1つ選べ。",
     correct_answer="b.画像データの特定の画素に加える変更は、慎重に観察してはじめて目線で気づけるくらい巧みなものである。",
     choices=[
@@ -2214,7 +2187,7 @@ model155 = QuestionModel(
 )
 
 db = SessionLocal()
-model156 = QuestionModel(
+model157 = QuestionModel(
     question_text="画像データに人間から見て変化がわからない程度のノイズや変更を加えることによって、機械学習に誤分類引き起こす可能性がある。このように摂動を加えたデータの名称として最も適切な選択肢を1つ選べ。",
     correct_answer="c.Adversarial Example",
     choices=[
@@ -2228,7 +2201,7 @@ model156 = QuestionModel(
 )
 
 db = SessionLocal()
-model157 = QuestionModel(
+model158 = QuestionModel(
     question_text="データ偽造の問題点と対策に関して、最も不適切な選択肢を1つ選べ。",
     correct_answer="a.データを実際の値から勝手に変更する不正行為は、「捏造」という。",
     choices=[
@@ -2242,7 +2215,7 @@ model157 = QuestionModel(
 )
 
 db = SessionLocal()
-model158 = QuestionModel(
+model159 = QuestionModel(
     question_text="AI活用によって公平性が損なわれた下記の事例のうち、AIシステムが差別的な振る舞いをした事例として、最もあてはまらない選択肢を1つ選べ。",
     correct_answer="c.高度なAIを活用するためには、ある程度のデジタルリテラシー水準が必要である。貧困層にあたる人は十分なリテラシーに達成することが今困難であるため、デジタルデバイドが生じやすい。",
     choices=[
@@ -2285,20 +2258,6 @@ model161 = QuestionModel(
 
 db = SessionLocal()
 model162 = QuestionModel(
-    question_text="",
-    correct_answer="",
-    choices=[
-        "",
-        "",
-        "",
-        "",
-    ],
-    commentary="",
-    tag="法規・倫理",
-)
-
-db = SessionLocal()
-model163 = QuestionModel(
     question_text="近年、ディープラーニングの利活用を普及させる上で説明可能AI(Explainable Artificial Intelligence; XAI)が重要視されている。XAIが必要とされる理由として最も不適切な選択肢を1つ選べ。",
     correct_answer="b.XAIは人間と同じところに着目してAIを解釈するアプローチをとるため、人間と同程度の推論能力を目指す「強いAI」の実現に貢献する。",
     choices=[
@@ -2312,7 +2271,7 @@ model163 = QuestionModel(
 )
 
 db = SessionLocal()
-model164 = QuestionModel(
+model163 = QuestionModel(
     question_text="モデルによる推論の根拠を説明しづらいことが、ディープラーニングの難点として挙げられているが、これを改善すべく、説明可能AI(Explainable AI;XAI)という研究が注目されている。XAIの目的として、最も適切な選択肢を1つ選べ。",
     correct_answer="d.推論の理由を可視化や自然言語で記述できるようになること。",
     choices=[
@@ -2326,7 +2285,7 @@ model164 = QuestionModel(
 )
 
 db = SessionLocal()
-model165 = QuestionModel(
+model164 = QuestionModel(
     question_text="AIをビジネスや社会に活用する上で、透明性(Transparency)が重要な観点です。AIの透明性に関して、最も不適切な選択肢を1つ選べ。",
     correct_answer="b.最新のアルゴリズムほどAIの透明性が確保されやすい傾向にあるため、開発から時間が経っているアルゴリズムの使用を見直すべきである。",
     choices=[
@@ -2340,7 +2299,7 @@ model165 = QuestionModel(
 )
 
 db = SessionLocal()
-model166 = QuestionModel(
+model165 = QuestionModel(
     question_text="AI倫理に関する取り組みの1つとして、FAT(Fairness Accountability Transparency)があります。FATの内容について、最も適切な選択肢を1つ選べ。",
     correct_answer="b.他の機械学習の手法に比べて、ニューラルネットワークは、透明性(Transparency)を実現することが困難である。",
     choices=[
@@ -2354,7 +2313,7 @@ model166 = QuestionModel(
 )
 
 db = SessionLocal()
-model167 = QuestionModel(
+model166 = QuestionModel(
     question_text="2018年5月に適用開始されたEU一般データ保護規則(GDPR)に関する説明として、最も不適切な選択肢を1つ選べ。",
     correct_answer="a.GDPRで認められているデータポータビリティの権利とは、EU域内に限って、収集した個人データを信頼性の高いクラウド技術などを活用して共有できる権利である。",
     choices=[
@@ -2368,7 +2327,7 @@ model167 = QuestionModel(
 )
 
 db = SessionLocal()
-model168 = QuestionModel(
+model167 = QuestionModel(
     question_text="次の文章を読み、空欄(ア)～(イ)の組み合わせに最もよくあてはまる選択肢を1つ選べ。EU一般データ保護規則(GDPR)では(ア)の権利を認めている。これはあるサービスに対して、そのユーザーが自らに関して収集・蓄積した利用履歴などのデータを、ほかのサービスでも利用可能な形で移転可能にすることを求める権利である。欧州委員会は、この権利は個人データについてのユーザーの管理権限を強化するだけでなく、(イ)という意義がある。",
     correct_answer="d.(ア)データポータビリティ (イ)新興企業による新規サービス創出を促す",
     choices=[
@@ -2382,7 +2341,7 @@ model168 = QuestionModel(
 )
 
 db = SessionLocal()
-model169 = QuestionModel(
+model168 = QuestionModel(
     question_text="AIを社会やビジネスに導入するのにあたって、様々な団体、企業、自治体がガイドラインの制定に取り組んでいる。これに関する記述として、最も不適切な選択肢を1つ選べ。",
     correct_answer="a.法や倫理はリスクの削減につながるものの、トレードオフとして技術革新を阻害する要因にもなりうる。",
     choices=[
@@ -2396,7 +2355,7 @@ model169 = QuestionModel(
 )
 
 db = SessionLocal()
-model170 = QuestionModel(
+model169 = QuestionModel(
     question_text="国内外のAI倫理ガイドラインまた方針について、適切な選択肢を1つ選べ。",
     correct_answer="d.Google社、Amazon社、Meta社、IBM社、Microsoft社など米国のIT企業を中心に、AIにおける安全性、公平性、透明性、責任を確立することを目標を、Partnership on AIが形成された。",
     choices=[
@@ -2410,7 +2369,7 @@ model170 = QuestionModel(
 )
 
 db = SessionLocal()
-model171 = QuestionModel(
+model170 = QuestionModel(
     question_text="世界中の様々な政府団体、学術団体(学会や研究所など)、企業において、AI倫理のガイドラインや指針が相次いで発表されている。これについて、最も不適切な選択肢を1つ選べ。",
     correct_answer="a.EUのAI専門家グループによって発表された'Ethics Guidelines for Trustworthy AI'は、EU区域内から参加する研究機関のフィードバックをもとに見直しを実施する予定である。",
     choices=[
@@ -2424,7 +2383,7 @@ model171 = QuestionModel(
 )
 
 db = SessionLocal()
-model172 = QuestionModel(
+model171 = QuestionModel(
     question_text="独占禁止法('独禁法')のAIやデータへの適用として、最も不適切な選択肢を1つ選べ。",
     correct_answer="b.「監視アルゴリズム」とは、プロダクトなどを事業者間で合意した価格で販売されているかをAIで監視し市場を支配することであり、現在独禁法でカバーされていないことが問題視されている。",
     choices=[
@@ -2438,7 +2397,7 @@ model172 = QuestionModel(
 )
 
 db = SessionLocal()
-model173 = QuestionModel(
+model172 = QuestionModel(
     question_text="フィルターバブルが起きている例として、最も適切な選択肢を1つ選べ。",
     correct_answer="c.特定のジャンルのウェブ記事にばっかり注意を向けさせられる。",
     choices=[
@@ -2452,7 +2411,7 @@ model173 = QuestionModel(
 )
 
 db = SessionLocal()
-model174 = QuestionModel(
+model173 = QuestionModel(
     question_text="AIが個人の意思に影響を与えてしまい、民主主義への脅威・阻害となりうる現象について、最も不適切な選択肢を1つ選べ。",
     correct_answer="c.レコメンドのアルゴリズムによって、ユーザーに有益な情報ばかりが優先された結果、他の情報から遮断された状態に陥ってしまう現象をエコーチェンバーと呼ぶ。",
     choices=[
@@ -2466,7 +2425,7 @@ model174 = QuestionModel(
 )
 
 db = SessionLocal()
-model175 = QuestionModel(
+model174 = QuestionModel(
     question_text="AIパーソナライズについて考えられる問題点として、不適切な選択肢を1つ選べ。",
     correct_answer="d.フィルターバブルという現象は、人々が自分の観点に合わない情報を自ら積極的に回避しようとする現象のことである。",
     choices=[
@@ -2480,21 +2439,7 @@ model175 = QuestionModel(
 )
 
 db = SessionLocal()
-model176 = QuestionModel(
-    question_text="",
-    correct_answer="",
-    choices=[
-        "",
-        "",
-        "",
-        "",
-    ],
-    commentary="",
-    tag="法規・倫理",
-)
-
-db = SessionLocal()
-model177 = QuestionModel(
+model175 = QuestionModel(
     question_text="AIの社会への浸透によってもたらされる変化や課題として、最も不適切な選択肢を1つ選べ。",
     correct_answer="a.AIはアルゴリズムによって計算が行われ、人間の意思を介さないため、客観的な結果出力を期待できる。",
     choices=[
@@ -2508,7 +2453,7 @@ model177 = QuestionModel(
 )
 
 db = SessionLocal()
-model178 = QuestionModel(
+model176 = QuestionModel(
     question_text="労働市場と人のスキル取得の観点から、AI技術の活用法について、最も適切な選択肢を1つ選べ。",
     correct_answer="b.高電圧が流れる変電所の点検や深水領域での捜索など危険な作業をAI搭載ロボットで行うようになった。",
     choices=[
@@ -2522,7 +2467,7 @@ model178 = QuestionModel(
 )
 
 db = SessionLocal()
-model179 = QuestionModel(
+model177 = QuestionModel(
     question_text="以下の文章を読み、(ア)と(イ)にあてはまる組み合わせとして、最も適切な選択肢を1つ選べ。高度な人工知能(AI)を搭載し、人間の関与なしに殺傷する能力を有する自律型致死兵器システムは(ア)と呼ばれる。日本政府は(ア)の開発はしないと宣言する一方、(イ)という立場をとっている。",
     correct_answer="c.(ア)LAWS (イ)人の意思が介在する自律型兵器の開発は規制すべきではない",
     choices=[
@@ -2536,7 +2481,7 @@ model179 = QuestionModel(
 )
 
 db = SessionLocal()
-model180 = QuestionModel(
+model178 = QuestionModel(
     question_text="AIの軍事利用にまつわる動向について、最も適切な選択肢を1つ選べ。",
     correct_answer="a.国連において、AIの軍事利用に関する規制が主張された。",
     choices=[
@@ -2550,7 +2495,7 @@ model180 = QuestionModel(
 )
 
 db = SessionLocal()
-model181 = QuestionModel(
+model179 = QuestionModel(
     question_text="2019年1月1日より改正著作権法が施行された。改正著作権法の中でもデジタル・ネットワーク化の進展に向けた規定として、最も不適切な選択肢を1つ選べ。",
     correct_answer="d.Web検索により表示する検索結果に、元の著作物の内容を表示することは違法である",
     choices=[
@@ -2564,7 +2509,7 @@ model181 = QuestionModel(
 )
 
 db = SessionLocal()
-model182 = QuestionModel(
+model180 = QuestionModel(
     question_text="AIのビジネス応用について述べたものとして、最も適切な選択肢を1つ選べ。",
     correct_answer="c.課題を分析した上で、AI活用の必要性の有無を含めて解決手法を選択する",
     choices=[
@@ -2578,7 +2523,7 @@ model182 = QuestionModel(
 )
 
 db = SessionLocal()
-model183 = QuestionModel(
+model181 = QuestionModel(
     question_text="プライバシー・バイ・デザインの考え方の説明として、最も適切な選択肢を1つ選べ。",
     correct_answer="c.AIサービスの企画や設計段階からプライバシー保護施策を組み込む",
     choices=[
@@ -2592,7 +2537,7 @@ model183 = QuestionModel(
 )
 
 db = SessionLocal()
-model184 = QuestionModel(
+model182 = QuestionModel(
     question_text="AIに対する倫理的な問題や価値観の問題が議論されている。Google社が開発したGoogle Photosが起こした事例として、最も適切な選択肢を1つ選べ。",
     correct_answer="d.黒人男女に対してカテゴリをゴリラであると判定した",
     choices=[
@@ -2606,7 +2551,7 @@ model184 = QuestionModel(
 )
 
 db = SessionLocal()
-model185 = QuestionModel(
+model183 = QuestionModel(
     question_text="AIに対する倫理的な問題や価値観の問題が議論されている。Microsoft社が開発したTayが起こした事例として、最も適切な選択肢を1つ選べ。",
     correct_answer="b.ヘイト発言・差別的発言をした",
     choices=[
@@ -2620,21 +2565,7 @@ model185 = QuestionModel(
 )
 
 db = SessionLocal()
-model186 = QuestionModel(
-    question_text="",
-    correct_answer="",
-    choices=[
-        "",
-        "",
-        "",
-        "",
-    ],
-    commentary="",
-    tag="法規・倫理",
-)
-
-db = SessionLocal()
-model187 = QuestionModel(
+model184 = QuestionModel(
     question_text="日本の内閣府が2018年に、実現することを目標に掲げている未来社会ビジョンの名称として、最も適切な選択肢を1つ選べ。",
     correct_answer="b.Society5.0",
     choices=[
@@ -2648,7 +2579,7 @@ model187 = QuestionModel(
 )
 
 db = SessionLocal()
-model188 = QuestionModel(
+model185 = QuestionModel(
     question_text="日本の内閣府は、未来社会ビジョンの実現には第四次産業革命技術の社会実装が鍵だとしている。第四次産業革命技術に含まれる技術として、最も適切な選択肢を1つ選べ。",
     correct_answer="a.IoT、ビッグデータ、AI、ロボット",
     choices=[
@@ -2662,7 +2593,7 @@ model188 = QuestionModel(
 )
 
 db = SessionLocal()
-model189 = QuestionModel(
+model186 = QuestionModel(
     question_text="以下の文章を読み、(ア)～(イ)に当てはまる組み合わせの選択肢を1つ選べ。AIやディープラーニングが注目される昨今、技術者を支援するプラットフォームが増えてきている。代表的なものとして、Kaggleは(ア)を、Google Scholarは(イ)をそれぞれ可能にしている。",
     correct_answer="d.(ア)コンペティションへの参加、(イ)Web検索による論文・学術誌へのアクセス",
     choices=[
@@ -2676,7 +2607,7 @@ model189 = QuestionModel(
 )
 
 db = SessionLocal()
-model190 = QuestionModel(
+model187 = QuestionModel(
     question_text="以下の文章を読み、(ア)～(ウ)に当てはまる組み合わせの選択肢を1つ選べ。自動運転技術は、その精度によって0～5のレベル分けがされている。これは、アメリカの非営利団体(ア)の「J3016」にて定められている。自動運転化が全くされていない通常の乗用車をレベル0とし、自動ブレーキなどの運転支援の機能がついたものはレベル(イ)、天候や道路などの特定の場所・条件に限り人手を必要としない運転機能をもつものはレベル(ウ)、あらゆる走行環境でも人手を全く必要としない運転機能をもつものをレベル5とされている。J3016では、レベル3以上を「自動運転」と定義している。",
     correct_answer="b.(ア)SAE、(イ)1、(ウ)3",
     choices=[
@@ -2690,7 +2621,7 @@ model190 = QuestionModel(
 )
 
 db = SessionLocal()
-model191 = QuestionModel(
+model188 = QuestionModel(
     question_text="システム開発における代表的な開発手法にウォーターフォール型とアジャイル型がある。アジャイル型の特徴として、最も適切でない選択肢を1つ選べ。",
     correct_answer="c.要件不足や認識違いにより手戻り作業が発生しやすい",
     choices=[
@@ -2704,7 +2635,7 @@ model191 = QuestionModel(
 )
 
 db = SessionLocal()
-model192 = QuestionModel(
+model189 = QuestionModel(
     question_text="AI開発時に契約や開発が進まない課題に対して、経済産業省はAI・データ契約ガイドライン検討会を設置し、4つの段階で契約を締結しながら開発を進める探索的段階型を提唱している。4つの段階として、最も適切な選択肢を1つ選べ。",
     correct_answer="d.アセスメント、PoC、開発、追加学習",
     choices=[
@@ -2718,7 +2649,7 @@ model192 = QuestionModel(
 )
 
 db = SessionLocal()
-model193 = QuestionModel(
+model190 = QuestionModel(
     question_text="経済産業省が定めた「AI・データの利用に関する契約ガイドライン」では、AI開発のプロセスを4つの段階に分けている。PoC段階における目的として、最も適切な選択肢を1つ選べ。",
     correct_answer="a.学習用データセットを用いてユーザが希望する精度の学習済みモデルが生成できるか検証する",
     choices=[
@@ -2732,7 +2663,7 @@ model193 = QuestionModel(
 )
 
 db = SessionLocal()
-model194 = QuestionModel(
+model191 = QuestionModel(
     question_text="AIの共同開発をする上で留意すべきこととして、最も適切でない選択肢を1つ選べ。",
     correct_answer="c.契約交渉は、実際の開発状況に合わせてステークホルダー間で認識を合わせながら進めていく必要があるが、秘密保持契約については開発の終盤で結ぶことが望ましい",
     choices=[
@@ -2746,7 +2677,7 @@ model194 = QuestionModel(
 )
 
 db = SessionLocal()
-model195 = QuestionModel(
+model192 = QuestionModel(
     question_text="CRISP-DMの特徴として、最も適切な選択肢を1つ選べ。",
     correct_answer="d.CRISP-DMの各工程は、必ず順番に進めなければならない訳ではなく、相互に行き来することがある。",
     choices=[
@@ -2760,7 +2691,7 @@ model195 = QuestionModel(
 )
 
 db = SessionLocal()
-model196 = QuestionModel(
+model193 = QuestionModel(
     question_text="プログラミング言語であるPythonの特徴として、最も適切でない選択肢を1つ選べ。",
     correct_answer="b.処理速度が非常に高速である",
     choices=[
@@ -2774,7 +2705,7 @@ model196 = QuestionModel(
 )
 
 db = SessionLocal()
-model197 = QuestionModel(
+model194 = QuestionModel(
     question_text="Define-by-Runの説明として、最も適切な選択肢を1つ選べ。",
     correct_answer="a.順伝播処理をしながら計算グラフを構築する",
     choices=[
@@ -2788,7 +2719,7 @@ model197 = QuestionModel(
 )
 
 db = SessionLocal()
-model198 = QuestionModel(
+model195 = QuestionModel(
     question_text="機械学習を行う際に、母集団を代表しないデータが学習データとして選ばれてしまう事象を指すバイアスとして、最も適切な選択肢を1つ選べ。",
     correct_answer="c.サンプリングバイアス",
     choices=[
@@ -2802,7 +2733,7 @@ model198 = QuestionModel(
 )
 
 db = SessionLocal()
-model199 = QuestionModel(
+model196 = QuestionModel(
     question_text="MLOpsの説明として、最も適切な選択肢を1つ選べ。",
     correct_answer="b.機械学習チーム/開発チームと運用チームが互いに強調し、円滑な運用体制を築くこと",
     choices=[
@@ -2816,7 +2747,7 @@ model199 = QuestionModel(
 )
 
 db = SessionLocal()
-model200 = QuestionModel(
+model197 = QuestionModel(
     question_text="説明可能なAI(XAI)の説明として、最も適切な選択肢を1つ選べ。",
     correct_answer="b.予測結果や推論の計算プロセスの解釈可読性が高い",
     choices=[
@@ -2830,7 +2761,7 @@ model200 = QuestionModel(
 )
 
 db = SessionLocal()
-model201 = QuestionModel(
+model198 = QuestionModel(
     question_text="個人情報保護法における個人情報の説明として、最も適切な選択肢を1つ選べ。",
     correct_answer="a.故人のみに関わる情報は保護の対象外である",
     choices=[
@@ -2844,7 +2775,7 @@ model201 = QuestionModel(
 )
 
 db = SessionLocal()
-model202 = QuestionModel(
+model199 = QuestionModel(
     question_text="個人情報について以下の文章を読み、(ア)～(イ)に当てはまる組み合わせの選択肢を1つ選べ。個人情報保護法上、個人情報は4つに分類される。個人データとは、データベースに含まれる個人情報のことをいう。保有個人データとは、個人情報取扱事業者に開示・訂正・消去等の権限があり、(ア)を超えて保有するものである。(イ)とは、人種、信条、社会的身分、病歴、犯罪の経歴、犯罪被害を受けた事実、その他本人に対する不当な差別、偏見などが含まれた個人情報のことである。",
     correct_answer="d.(ア)6ヶ月、(イ)要配慮個人情報",
     choices=[
@@ -2858,7 +2789,7 @@ model202 = QuestionModel(
 )
 
 db = SessionLocal()
-model203 = QuestionModel(
+model200 = QuestionModel(
     question_text="匿名加工情報を取り扱う事業者に課せられる義務として、最も適切でない選択肢を1つ選べ。",
     correct_answer="b.匿名加工情報の加工方法を公開しなければならない",
     choices=[
@@ -2872,7 +2803,7 @@ model203 = QuestionModel(
 )
 
 db = SessionLocal()
-model204 = QuestionModel(
+model201 = QuestionModel(
     question_text="発明者に関する説明として、最も適切でない選択肢を1つ選べ。",
     correct_answer="a.複数人が共同で発明した場合、そのうちの一人のみが発明者になれる",
     choices=[
@@ -2886,7 +2817,7 @@ model204 = QuestionModel(
 )
 
 db = SessionLocal()
-model205 = QuestionModel(
+model202 = QuestionModel(
     question_text="不正競争防止法上の営業秘密として保護されるために必要な特性として、最も適切な選択肢を1つ選べ。",
     correct_answer="d.秘密管理性、有用性、非公知性",
     choices=[
@@ -2900,7 +2831,7 @@ model205 = QuestionModel(
 )
 
 db = SessionLocal()
-model206 = QuestionModel(
+model203 = QuestionModel(
     question_text="ディープラーニングを利用して、2つの画像や動画の一部を交換させる技術して、最も適切な選択肢を1つ選べ。",
     correct_answer="b.ディープフェイク",
     choices=[
@@ -2914,7 +2845,7 @@ model206 = QuestionModel(
 )
 
 db = SessionLocal()
-model207 = QuestionModel(
+model204 = QuestionModel(
     question_text="インターネット上で自分の見たい情報しか見えなくなることを指す用語として、最も適切な選択肢を1つ選べ。",
     correct_answer="c.フィルターバブル",
     choices=[
@@ -2928,7 +2859,7 @@ model207 = QuestionModel(
 )
 
 db = SessionLocal()
-model208 = QuestionModel(
+model205 = QuestionModel(
     question_text="Adversarial Attacks(敵対的な攻撃)と関連が深い内容として、最も適切な選択肢を1つ選べ。",
     correct_answer="b.ある画像に微小なノイズを付加することで誤った認識をさせた",
     choices=[
@@ -2942,7 +2873,7 @@ model208 = QuestionModel(
 )
 
 db = SessionLocal()
-model209 = QuestionModel(
+model206 = QuestionModel(
     question_text="シリアス・ゲームの説明として、最も適切な選択肢を1つ選べ。",
     correct_answer="b.純粋な娯楽のためではなく、社会問題の解決を目的とするコンピュータゲームの総称",
     choices=[
@@ -2956,7 +2887,7 @@ model209 = QuestionModel(
 )
 
 db = SessionLocal()
-model210 = QuestionModel(
+model207 = QuestionModel(
     question_text="GDPRに関する説明として、最も適切な選択肢を1つ選べ。",
     correct_answer="d.GDPRでは個人の氏名や住所、クレジットカード番号のみならず、位置情報やクッキー情報も個人情報と見做される",
     choices=[
@@ -2970,7 +2901,7 @@ model210 = QuestionModel(
 )
 
 db = SessionLocal()
-model211 = QuestionModel(
+model208 = QuestionModel(
     question_text="「標本」とは何を指しますか？",
     correct_answer="b.母集団から抽出された一部のデータ",
     choices=[
@@ -2984,7 +2915,7 @@ model211 = QuestionModel(
 )
 
 db = SessionLocal()
-model212 = QuestionModel(
+model209 = QuestionModel(
     question_text="「平均値」の計算方法は次のうちどれですか？",
     correct_answer="a.各データを合計してデータ数で割る",
     choices=[
@@ -2998,7 +2929,7 @@ model212 = QuestionModel(
 )
 
 db = SessionLocal()
-model213 = QuestionModel(
+model210 = QuestionModel(
     question_text="「分散」は何を測定する指標ですか？",
     correct_answer="a.データのばらつき具合",
     choices=[
@@ -3012,7 +2943,7 @@ model213 = QuestionModel(
 )
 
 db = SessionLocal()
-model214 = QuestionModel(
+model211 = QuestionModel(
     question_text="標本の数値データが以下の通りであるとき、平均値を求めてください 。 :  [12, 15, 18, 20, 22]",
     correct_answer="d.17.4",
     choices=[
@@ -3026,7 +2957,7 @@ model214 = QuestionModel(
 )
 
 db = SessionLocal()
-model215 = QuestionModel(
+model212 = QuestionModel(
     question_text="標本の数値データが以下の通りであるとき、標準偏差を求めてください。  :  [10, 12, 14, 16, 18]",
     correct_answer="c.約2.24",
     choices=[
@@ -3040,7 +2971,7 @@ model215 = QuestionModel(
 )
 
 db = SessionLocal()
-model216 = QuestionModel(
+model213 = QuestionModel(
     question_text="外から見えない袋の1~5の数字の書いたボールが一つずつ入っている。中身を見ずに一つだけ取り出す場合の期待値を選択肢から選べ",
     correct_answer="c.3.3",
     choices=[
@@ -3054,7 +2985,7 @@ model216 = QuestionModel(
 )
 
 db = SessionLocal()
-model217 = QuestionModel(
+model214 = QuestionModel(
     question_text="あるスーパーのアプリは来店するたびに「来店ポイント」が付与される。付与されるのは1ポイントまたは10ポイントです。10ポイントが付与される確率は1/10です。Aさんが一度スーパーに行った場合、付与されるポイントの期待値として、最も適切な選択肢を1つ選べ。",
     correct_answer="a.期待値は1.9",
     choices=[
@@ -3068,7 +2999,7 @@ model217 = QuestionModel(
 )
 
 db = SessionLocal()
-model218 = QuestionModel(
+model215 = QuestionModel(
     question_text="サイコロを振る際に、出る目xがある値をとる確率f(x)が以下の式に従う場合、xの期待値として最も正しい選択肢を1つ選べ。f(x)  =  1/6、  1、2、…、6",
     correct_answer="d.3.5",
     choices=[
@@ -3082,7 +3013,7 @@ model218 = QuestionModel(
 )
 
 db = SessionLocal()
-model219 = QuestionModel(
+model216 = QuestionModel(
     question_text="次の2つの母集団U1とU2を比べた時の特徴として、最も不適切な選択肢を1つ選べ。U1 = [47, 55, 60, 79, 100]、U2 = [49, 55, 60, 70, 75]",
     correct_answer="a.U2はU1より分散は大きい",
     choices=[
@@ -3096,7 +3027,7 @@ model219 = QuestionModel(
 )
 
 db = SessionLocal()
-model220 = QuestionModel(
+model217 = QuestionModel(
     question_text="標本誤差という量に関する記述として、最も適切な選択肢を1つ選べ。",
     correct_answer="c.標本誤差とは、標本の値と母集団の値の差を表す。",
     choices=[
@@ -3110,7 +3041,7 @@ model220 = QuestionModel(
 )
 
 db = SessionLocal()
-model221 = QuestionModel(
+model218 = QuestionModel(
     question_text="確率分布について述べた内容について、最も不適切な選択肢を1選べ。",
     correct_answer="b.珍しい事象が一定期間内に発生する回数を表す確率変数は、一般的に標準正規分布に従う。",
     choices=[
@@ -3124,7 +3055,7 @@ model221 = QuestionModel(
 )
 
 db = SessionLocal()
-model222 = QuestionModel(
+model219 = QuestionModel(
     question_text="(ア)に最もよくあてはまる選択肢を1つ選べ。関数 y=f(x)のx=aにおける(ア)はf'(a)と書かれ、曲線f(x)のx=aにおける接線の傾きと解釈できる。",
     correct_answer="b.微分係数",
     choices=[
@@ -3138,7 +3069,7 @@ model222 = QuestionModel(
 )
 
 db = SessionLocal()
-model223 = QuestionModel(
+model220 = QuestionModel(
     question_text="次の文章を読み、(ア)(イ)(ウ)に入る用語の組み合わせとして、最も適切な選択肢を1つ選べ。画像認識において、画像の画素の数値を特徴量として使う。画像とは画素の数値が縦横に並んでいる状態とみなすことができる。一般的に、数値が一列に並んだ構造は数学では(ア)と呼ばれ、縦×横の二次元で数値が並んでいる構造は(イ)と呼ばれる。(ウ)は(ア)と(イ)を扱っている数学の分野の1つである。",
     correct_answer="b.(ア)ベクトル(イ)行列(ウ)線形代数",
     choices=[
@@ -3152,7 +3083,7 @@ model223 = QuestionModel(
 )
 
 db = SessionLocal()
-model224 = QuestionModel(
+model221 = QuestionModel(
     question_text="行列AとBが共に m×nの行列であるとき、AとBのアダマール積のサイズとして、最も適切な選択肢を1つ選べ。",
     correct_answer="b.m×n",
     choices=[
@@ -3166,7 +3097,7 @@ model224 = QuestionModel(
 )
 
 db = SessionLocal()
-model225 = QuestionModel(
+model222 = QuestionModel(
     question_text="外から見えない袋の1～5の数字の書いたボールが一つずつ入っている。中身を見ずに一つだけ取り出す場合の期待値を選択肢から選べ。",
     correct_answer="c.3",
     choices=[
@@ -3180,7 +3111,7 @@ model225 = QuestionModel(
 )
 
 db = SessionLocal()
-model226 = QuestionModel(
+model223 = QuestionModel(
     question_text="次に示す母集団UがU'に変更された場合に言えることについて、もっとも適切なものを選択肢から選べ。U=[40、30、45、55、60]、U’=[40、30、95、55、60]",
     correct_answer="a.Uに比べ、U'の標準偏差は大きい",
     choices=[
@@ -3194,7 +3125,7 @@ model226 = QuestionModel(
 )
 
 db = SessionLocal()
-model227 = QuestionModel(
+model224 = QuestionModel(
     question_text="以下の文章を読み、(ア)に最もよく当てはまる選択肢を1つ選べ。ランダムに操作を行い、操作の結果によって報酬を与える。報酬が最大になるように訓練していく学習方法を(ア)という。",
     correct_answer="d.強化学習",
     choices=[
@@ -3208,7 +3139,7 @@ model227 = QuestionModel(
 )
 
 db = SessionLocal()
-model228 = QuestionModel(
+model225 = QuestionModel(
     question_text="以下の文章を読み、(ア)に最もよく当てはまる選択肢を1つ選べ。強化学習において、エージェントが選択した行動の最終的な報酬の期待値を(ア)と呼ぶ。",
     correct_answer="b.Q値",
     choices=[
@@ -3222,7 +3153,7 @@ model228 = QuestionModel(
 )
 
 db = SessionLocal()
-model229 = QuestionModel(
+model226 = QuestionModel(
     question_text="最初に計算されたQ値と、実際に行動して得られるQ値の期待値との差を、Q値に反映させる学習方法をなんと呼ぶか。選択肢から最も適切なものを選べ。",
     correct_answer="d.Q学習",
     choices=[
@@ -3236,7 +3167,7 @@ model229 = QuestionModel(
 )
 
 db = SessionLocal()
-model230 = QuestionModel(
+model227 = QuestionModel(
     question_text="一度行動して得られたQ値を使って、元のQ値を更新する学習方法をなんと呼ぶか、選択肢から最も適切なものを選べ。",
     correct_answer="a.SARSA",
     choices=[
@@ -3250,7 +3181,7 @@ model230 = QuestionModel(
 )
 
 db = SessionLocal()
-model231 = QuestionModel(
+model228 = QuestionModel(
     question_text="報酬を得られるまでQ値の更新をせず、報酬を得たタイミングで今までのQ値を更新する学習方法をなんと呼ぶか、選択肢から最も適切なものを選べ。",
     correct_answer="b.モンテカルロ法",
     choices=[
@@ -3264,7 +3195,7 @@ model231 = QuestionModel(
 )
 
 db = SessionLocal()
-model232 = QuestionModel(
+model229 = QuestionModel(
     question_text="Q学習にDeep Learningを取り入れた学習手法をなんと呼ぶか、最もよく当てはまる選択肢を1つ選べ。",
     correct_answer="c.DQN",
     choices=[
@@ -3278,7 +3209,7 @@ model232 = QuestionModel(
 )
 
 db = SessionLocal()
-model233 = QuestionModel(
+model230 = QuestionModel(
     question_text="強化学習において複数のエージェントを用意してそれぞれが学習を行う手法をなんというか。",
     correct_answer="d.マルチエージェント学習",
     choices=[
@@ -3292,7 +3223,7 @@ model233 = QuestionModel(
 )
 
 db = SessionLocal()
-model234 = QuestionModel(
+model231 = QuestionModel(
     question_text="強化学習のモデルであるRainbowに含まれる手法として不適切なものを選択肢から選べ。",
     correct_answer="d.LSTM",
     choices=[
@@ -3306,7 +3237,7 @@ model234 = QuestionModel(
 )
 
 db = SessionLocal()
-model235 = QuestionModel(
+model232 = QuestionModel(
     question_text="以下の文章が説明した単語として最も適切なものを選択肢から選べ。過去に蓄積されたデータのみで強化学習を行う手法",
     correct_answer="c.オフライン強化学習",
     choices=[
@@ -3320,7 +3251,7 @@ model235 = QuestionModel(
 )
 
 db = SessionLocal()
-model236 = QuestionModel(
+model233 = QuestionModel(
     question_text="Q値の期待値と実際の行動から得られるQ値との差を何と呼ぶか選択肢から選べ。",
     correct_answer="d.TD",
     choices=[
@@ -3334,7 +3265,7 @@ model236 = QuestionModel(
 )
 
 db = SessionLocal()
-model237 = QuestionModel(
+model234 = QuestionModel(
     question_text="方策ベースの学習方法として適切なものを選択肢から選べ。",
     correct_answer="d.Actor-Critic",
     choices=[
@@ -3348,7 +3279,7 @@ model237 = QuestionModel(
 )
 
 db = SessionLocal()
-model238 = QuestionModel(
+model235 = QuestionModel(
     question_text="Actor-Criticにディープラーニングを取り入れて応用したモデルを何と呼ぶか選択肢から選べ。",
     correct_answer="a.A3C",
     choices=[
@@ -3362,7 +3293,7 @@ model238 = QuestionModel(
 )
 
 db = SessionLocal()
-model239 = QuestionModel(
+model236 = QuestionModel(
     question_text="シミュレーションで強化学習を行う際、シミュレーションの環境をランダムに変更することによって、AIの汎化性能を上げる手法を何と呼ぶか選択肢から選べ。",
     correct_answer="c.ドメインランダマイゼーション",
     choices=[
@@ -3376,9 +3307,9 @@ model239 = QuestionModel(
 )
 
 db = SessionLocal()
-model240 = QuestionModel(
+model237 = QuestionModel(
     question_text="オフライン強化学習の説明として適切なものを選択肢から選べ。",
-    correct_answer="",
+    correct_answer="b.既存のデータだけで学習を行う",
     choices=[
         "a.現実世界に存在するものだけで学習を行う",
         "b.既存のデータだけで学習を行う",
@@ -3390,7 +3321,7 @@ model240 = QuestionModel(
 )
 
 db = SessionLocal()
-model241 = QuestionModel(
+model238 = QuestionModel(
     question_text="強化学習において、シミュレーションの世界と現実世界のギャップを埋めることを何と呼ぶか、選択肢から選べ。",
     correct_answer="b.TD誤差",
     choices=[
@@ -3404,7 +3335,7 @@ model241 = QuestionModel(
 )
 
 db = SessionLocal()
-model242 = QuestionModel(
+model239 = QuestionModel(
     question_text="状態表現学習の説明として適切なものを選択肢から選べ。",
     correct_answer="a.現実世界をどのようにシミュレーションするかを学習する",
     choices=[
@@ -3418,7 +3349,7 @@ model242 = QuestionModel(
 )
 
 db = SessionLocal()
-model243 = QuestionModel(
+model240 = QuestionModel(
     question_text="強化学習をする際に目的にあった報酬を設定することが大切である。目的と報酬の組み合わせとして最も不適切なものを選択肢から選べ。",
     correct_answer="a.目的：将棋に勝利する、報酬：駒ごとに点数を決め、取った駒の点数を報酬とする",
     choices=[
@@ -3432,7 +3363,7 @@ model243 = QuestionModel(
 )
 
 db = SessionLocal()
-model244 = QuestionModel(
+model241 = QuestionModel(
     question_text="機械学習と人工知能の関係について正しいものはどれですか？",
     correct_answer="a.機械学習は人工知能の一部であり、データから学習する手法を提供する",
     choices=[
@@ -3446,7 +3377,7 @@ model244 = QuestionModel(
 )
 
 db = SessionLocal()
-model245 = QuestionModel(
+model242 = QuestionModel(
     question_text="線形回帰とは何を予測するための手法ですか？",
     correct_answer="b.連続的な出力",
     choices=[
@@ -3460,7 +3391,7 @@ model245 = QuestionModel(
 )
 
 db = SessionLocal()
-model246 = QuestionModel(
+model243 = QuestionModel(
     question_text="ロジスティック回帰は何を予測するための手法ですか？",
     correct_answer="c.バイナリな出力",
     choices=[
@@ -3474,7 +3405,7 @@ model246 = QuestionModel(
 )
 
 db = SessionLocal()
-model247 = QuestionModel(
+model244 = QuestionModel(
     question_text="ランダムフォレストは何のための手法ですか？",
     correct_answer="c.クラス分類や回帰のためのアンサンブル手法",
     choices=[
@@ -3488,7 +3419,7 @@ model247 = QuestionModel(
 )
 
 db = SessionLocal()
-model248 = QuestionModel(
+model245 = QuestionModel(
     question_text="ブースティングは何のための手法ですか？",
     correct_answer="b.徳微量の選択",
     choices=[
@@ -3502,7 +3433,7 @@ model248 = QuestionModel(
 )
 
 db = SessionLocal()
-model249 = QuestionModel(
+model246 = QuestionModel(
     question_text="サポートベクターマシン(SVM)は何のための手法ですか？",
     correct_answer="b.データのクラスタリング",
     choices=[
@@ -3516,7 +3447,7 @@ model249 = QuestionModel(
 )
 
 db = SessionLocal()
-model250 = QuestionModel(
+model247 = QuestionModel(
     question_text="k-means法は何を行うための手法ですか？",
     correct_answer="a.クラスタリング",
     choices=[
@@ -3530,7 +3461,7 @@ model250 = QuestionModel(
 )
 
 db = SessionLocal()
-model251 = QuestionModel(
+model248 = QuestionModel(
     question_text="ウォード法は何のための手法ですか？",
     correct_answer="a.クラスタリング",
     choices=[
@@ -3544,7 +3475,7 @@ model251 = QuestionModel(
 )
 
 db = SessionLocal()
-model252 = QuestionModel(
+model249 = QuestionModel(
     question_text="主成分分析(PCA)は何を行うための手法ですか？",
     correct_answer="d.次元削減",
     choices=[
@@ -3558,7 +3489,7 @@ model252 = QuestionModel(
 )
 
 db = SessionLocal()
-model253 = QuestionModel(
+model250 = QuestionModel(
     question_text="協調フィルタリングは何を行うための手法ですか？",
     correct_answer="b.レコメンデーション",
     choices=[
@@ -3572,7 +3503,7 @@ model253 = QuestionModel(
 )
 
 db = SessionLocal()
-model254 = QuestionModel(
+model251 = QuestionModel(
     question_text="トピックモデルは何のための手法ですか？",
     correct_answer="b.テキストの解析",
     choices=[
@@ -3586,7 +3517,7 @@ model254 = QuestionModel(
 )
 
 db = SessionLocal()
-model255 = QuestionModel(
+model252 = QuestionModel(
     question_text="ビックデータの特徴として正しいものはどれですか？",
     correct_answer="b.伝統的なデータ処理ツールで容易に処理できる",
     choices=[
@@ -3600,7 +3531,7 @@ model255 = QuestionModel(
 )
 
 db = SessionLocal()
-model256 = QuestionModel(
+model253 = QuestionModel(
     question_text="レコメンデーションエンジンの主な目的は何ですか？",
     correct_answer="c.ユーザーに適切なアイテムを推薦する",
     choices=[
@@ -3614,7 +3545,7 @@ model256 = QuestionModel(
 )
 
 db = SessionLocal()
-model257 = QuestionModel(
+model254 = QuestionModel(
     question_text="スパムフィルターの機能として正しいものはどれですか？",
     correct_answer="d.不要な電子メールの検出",
     choices=[
@@ -3628,7 +3559,7 @@ model257 = QuestionModel(
 )
 
 db = SessionLocal()
-model258 = QuestionModel(
+model255 = QuestionModel(
     question_text="統計的自然言語処理の主な手法は何ですか？",
     correct_answer="b.機械学習手法",
     choices=[
@@ -3642,7 +3573,7 @@ model258 = QuestionModel(
 )
 
 db = SessionLocal()
-model259 = QuestionModel(
+model256 = QuestionModel(
     question_text="コーパスとは何ですか？",
     correct_answer="d.テキストデータの集合",
     choices=[
@@ -3656,7 +3587,7 @@ model259 = QuestionModel(
 )
 
 db = SessionLocal()
-model260 = QuestionModel(
+model257 = QuestionModel(
     question_text="バンディットアルゴリズムは何に関連していますか？",
     correct_answer="c.強化学習",
     choices=[
@@ -3670,7 +3601,7 @@ model260 = QuestionModel(
 )
 
 db = SessionLocal()
-model261 = QuestionModel(
+model258 = QuestionModel(
     question_text="マルコフ決定過程モデルは何をモデリングするための手法ですか？",
     correct_answer="d.確率的な遷移と報酬",
     choices=[
@@ -3684,7 +3615,7 @@ model261 = QuestionModel(
 )
 
 db = SessionLocal()
-model262 = QuestionModel(
+model259 = QuestionModel(
     question_text="価値関数は何を評価するための関数ですか",
     correct_answer="b.状態の価値",
     choices=[
@@ -3698,7 +3629,7 @@ model262 = QuestionModel(
 )
 
 db = SessionLocal()
-model263 = QuestionModel(
+model260 = QuestionModel(
     question_text="人工知能(AI)の定義として最も適切なものはどれですか？",
     correct_answer="b.コンピュータが人間の知能を模倣して行動する技術",
     choices=[
@@ -3712,7 +3643,7 @@ model263 = QuestionModel(
 )
 
 db = SessionLocal()
-model264 = QuestionModel(
+model261 = QuestionModel(
     question_text="次のうち、人工知能の一般的な目的に該当するものはどれですか？",
     correct_answer="b.人間の認知能力の模倣と行動",
     choices=[
@@ -3726,7 +3657,7 @@ model264 = QuestionModel(
 )
 
 db = SessionLocal()
-model265 = QuestionModel(
+model262 = QuestionModel(
     question_text="強いAI(Strong AI)と弱いAI(Weak AI)の違いとして正しいものはどれですか？",
     correct_answer="b.強いAIは人間と同じレベルの知能を持ち、弱いAIは特定のタスクに特価している",
     choices=[
@@ -3740,7 +3671,7 @@ model265 = QuestionModel(
 )
 
 db = SessionLocal()
-model266 = QuestionModel(
+model263 = QuestionModel(
     question_text="チューリングテストとは何ですか？",
     correct_answer="c.コンピュータが人間と区別できないほどの知的な応答をするかどうかを評価するテスト",
     choices=[
@@ -3754,7 +3685,7 @@ model266 = QuestionModel(
 )
 
 db = SessionLocal()
-model267 = QuestionModel(
+model264 = QuestionModel(
     question_text="人工知能という用語が初めて提唱されたのはどの会議ですか？",
     correct_answer="a.ダートマス会議",
     choices=[
@@ -3768,7 +3699,7 @@ model267 = QuestionModel(
 )
 
 db = SessionLocal()
-model268 = QuestionModel(
+model265 = QuestionModel(
     question_text="1950年代にジョン・マッカーシーが提唱した人工知能の定義はどれですか？",
     correct_answer="b.コンピュータが推論と問題解決を行う能力",
     choices=[
@@ -3782,7 +3713,7 @@ model268 = QuestionModel(
 )
 
 db = SessionLocal()
-model269 = QuestionModel(
+model266 = QuestionModel(
     question_text="1970年代から1980年代にかけて、人工知能の商業応用として広く研究されたシステムは何ですか？",
     correct_answer="b.エキスパートシステム",
     choices=[
@@ -3796,7 +3727,7 @@ model269 = QuestionModel(
 )
 
 db = SessionLocal()
-model270 = QuestionModel(
+model267 = QuestionModel(
     question_text="「AIの冬」と呼ばれる期間が訪れた主な理由として最も適切なものはどれですか？",
     correct_answer="a.研究資金の大幅な削減",
     choices=[
@@ -3810,7 +3741,7 @@ model270 = QuestionModel(
 )
 
 db = SessionLocal()
-model271 = QuestionModel(
+model268 = QuestionModel(
     question_text="ローブナーコンテストは何をテストするための競技会ですか？",
     correct_answer="c.自然言語生成",
     choices=[
@@ -3824,7 +3755,7 @@ model271 = QuestionModel(
 )
 
 db = SessionLocal()
-model272 = QuestionModel(
+model269 = QuestionModel(
     question_text="中国語の部屋は何をシュミレートするための実験ですか？",
     correct_answer="c.言語の理解",
     choices=[
@@ -3838,7 +3769,7 @@ model272 = QuestionModel(
 )
 
 db = SessionLocal()
-model273 = QuestionModel(
+model270 = QuestionModel(
     question_text="機械翻訳の主な目的は何ですか？",
     correct_answer="c.言語間の自動翻訳",
     choices=[
@@ -3852,7 +3783,7 @@ model273 = QuestionModel(
 )
 
 db = SessionLocal()
-model273 = QuestionModel(
+model271 = QuestionModel(
     question_text="ルールベース機械翻訳の特徴は何ですか？",
     correct_answer="c.言語間の文法ルールを利用する",
     choices=[
@@ -3866,7 +3797,7 @@ model273 = QuestionModel(
 )
 
 db = SessionLocal()
-model274 = QuestionModel(
+model272 = QuestionModel(
     question_text="統計学的機械翻訳の主な特徴は何ですか？",
     correct_answer="c.言語の文脈を考慮する",
     choices=[
@@ -3880,7 +3811,7 @@ model274 = QuestionModel(
 )
 
 db = SessionLocal()
-model275 = QuestionModel(
+model273 = QuestionModel(
     question_text="イライザ(ELIZA)の開発者は誰ですか？",
     correct_answer="c.ジョセフ・ワイゼンバウム",
     choices=[
@@ -3894,7 +3825,7 @@ model275 = QuestionModel(
 )
 
 db = SessionLocal()
-model276 = QuestionModel(
+model274 = QuestionModel(
     question_text="イライザ効果とは何ですか？",
     correct_answer="b.人々がコンピュータプログラムに対して感情的な反応を示す現象",
     choices=[
@@ -3908,7 +3839,7 @@ model276 = QuestionModel(
 )
 
 db = SessionLocal()
-model276 = QuestionModel(
+model275 = QuestionModel(
     question_text="マイシン(MYCIN)は何のために開発されたエキスパートシステムですか？",
     correct_answer="b.医療診断",
     choices=[
@@ -3922,7 +3853,7 @@ model276 = QuestionModel(
 )
 
 db = SessionLocal()
-model277 = QuestionModel(
+model276 = QuestionModel(
     question_text="DENDRALプロジェクトの目的は何ですか？",
     correct_answer="c.化学構造の解析",
     choices=[
@@ -3936,7 +3867,7 @@ model277 = QuestionModel(
 )
 
 db = SessionLocal()
-model278 = QuestionModel(
+model277 = QuestionModel(
     question_text="インタビューシステムの主要な利用例として適切なものはどれですか？",
     correct_answer="b.病歴の収集",
     choices=[
@@ -3950,7 +3881,7 @@ model278 = QuestionModel(
 )
 
 db = SessionLocal()
-model279 = QuestionModel(
+model278 = QuestionModel(
     question_text="AI効果の説明として、最も適切な選択肢を1つ選べ。",
     correct_answer="b.AIへの期待が大きいのに対し、一度AIの原理を知ると、人々は「これは知能ではなく、単なる自動化である」と失望する。",
     choices=[
@@ -3964,7 +3895,7 @@ model279 = QuestionModel(
 )
 
 db = SessionLocal()
-model280 = QuestionModel(
+model279 = QuestionModel(
     question_text="AIに期待できる性能として、最も不適切な選択肢を1つ選べ",
     correct_answer="a.AI効果とは、強いAIですら本物の知識をもたないと考える人間の心理状態を意味する。",
     choices=[
@@ -3978,7 +3909,7 @@ model280 = QuestionModel(
 )
 
 db = SessionLocal()
-model281 = QuestionModel(
+model280 = QuestionModel(
     question_text="機械やソフトウェアに知識があるとみなせるかどうかを判別する手法として、最も適切な選択肢を1つ選べ。",
     correct_answer="d.チューリングテスト",
     choices=[
@@ -3992,7 +3923,7 @@ model281 = QuestionModel(
 )
 
 db = SessionLocal()
-model282 = QuestionModel(
+model281 = QuestionModel(
     question_text="第2次AIブームを特徴づける内容として、最も適切な選択肢を1つ選べ",
     correct_answer="c.知識をコンピュータに蓄え、質問に対す専門家にかわって返答するAIが開発された",
     choices=[
@@ -4006,7 +3937,7 @@ model282 = QuestionModel(
 )
 
 db = SessionLocal()
-model283 = QuestionModel(
+model282 = QuestionModel(
     question_text="以下の文章を読み、(ア)に最もよくあてはまる選択肢を1つ選べ。第2次AIブームでは、一見社会に有用なAIの開発に成功したように見えたものの、しばらくして(ア)という問題が発覚するとともに徐々に第2次AIブームも衰退していった。",
     correct_answer="a.大量な知識の獲得と管理が大変",
     choices=[
@@ -4020,7 +3951,7 @@ model283 = QuestionModel(
 )
 
 db = SessionLocal()
-model284 = QuestionModel(
+model283 = QuestionModel(
     question_text="第2次AIブームの時に開発された、有機化合物の分子構造を推定するシステムとして、最も適切な選択肢を1つ選べ。",
     correct_answer="a.DENDRAL",
     choices=[
@@ -4034,7 +3965,7 @@ model284 = QuestionModel(
 )
 
 db = SessionLocal()
-model285 = QuestionModel(
+model284 = QuestionModel(
     question_text="第1次AIブームに生まれた探索・推論を可能とするAIの用途として、最も適切な選択肢を1つ選べ",
     correct_answer="b.掃除ロボット",
     choices=[
@@ -4047,22 +3978,8 @@ model285 = QuestionModel(
     tag="AI概論",
 )
 
-# db = SessionLocal()
-# model286 = QuestionModel(
-#     question_text="",
-#     correct_answer="",
-#     choices=[
-#         "a.",
-#         "b.",
-#         "c.",
-#         "d.",
-#     ],
-#     commentary="",
-#     tag="AI概論",
-# )
-
 db = SessionLocal()
-model287 = QuestionModel(
+model285 = QuestionModel(
     question_text="以下の文章を読み、(ア)に最もよくあてはまる選択肢を1つ選べ。第1次AIブームにおいては、(ア)を用いた人工知能が台頭した。",
     correct_answer="c.探索と推論",
     choices=[
@@ -4076,7 +3993,7 @@ model287 = QuestionModel(
 )
 
 db = SessionLocal()
-model288 = QuestionModel(
+model286 = QuestionModel(
     question_text="これまでにAIブームが３度起きたと言われる。第２次AIブームの終焉の原因として、最も不適切な選択肢を１つ選べ。",
     correct_answer="c.知識をデータとして保存するためのディスク・メモリーを確保することが大変",
     choices=[
@@ -4086,11 +4003,11 @@ model288 = QuestionModel(
         "d.質疑応答における言葉の揺らぎに対応できるようにシステムを構築することが大変",
     ],
     commentary="第２次AIブームを代表する技術であるエキスパートシステムは第1次AIブームの時に比べて実世界での適用範囲は広がったものの、選択肢a、b、dのような課題があったため、ブームは終焉を迎えました。選択肢cだけがこの時代のエキスパートシステムにまつわる困難と直接関係していません。第2次AIブームでエキスパートシステムが普及する中で次のような知識の抽出と蓄積に関する問題点が判明しました。・専門知識を取り込むためには毎回、専門家にヒアリングする必要がある。ヒアリングした内容から有用な知識だけを取り出す処理は、非常にコストが高い。概念間に関係性を記述したルールを追加すればするほど、維持管理が大変。数多くのルールが互いに矛盾し、一貫性を保ちにくい。",
-    tag="深層学習",
+    tag="AI概論",
 )
 
 db = SessionLocal()
-model289 = QuestionModel(
+model287 = QuestionModel(
     question_text="エキスパートシステムの開発と活用に伴う困難について、最も不適切な選択肢を１つ選べ",
     correct_answer="c.蓄積する知識の量が多いあまり、それを処理するためのコンピュータ処理能力が不十分だった。",
     choices=[
@@ -4100,17 +4017,147 @@ model289 = QuestionModel(
         "d.人間の専門家とは異なり、応答が不自然であることもあった。",
     ],
     commentary="第２次AIブームを代表するエキスパートシステムでは、専門家(エキスパート)から知識をヒアリングし、その知識をコンピュータの中で整理し蓄積します。ユーザーが質問をした際に、該当すると思われる答えを抽出し回答します。エキスパートシステムが医療や自然科学など、様々な分野で実用化されました。一方で、知識の整備と保守には高いコストがかかっていました。適格な判断を下すためには、ありとあらゆる専門知識を教え込む作業が必要となり相当な労力が必要です。また、知識を管理するために、世の中の「全て」のルールを適用することは非現実的です。それゆえ、システムを使う中では頻繁に例外や矛盾にぶつかることがあります。選択肢cだけは、エキスパートシステムが対面していた課題とは関係ない項目です。コンピュータの処理能力や知識を保存するデータベースそのものは、第2次AIブームの主要な問題ではありませんでした。",
-    tag="深層学習",
+    tag="AI概論",
 )
 
+db.add(model1)
+db.add(model2)
+db.add(model3)
+db.add(model4)
+db.add(model5)
+db.add(model6)
+db.add(model7)
+db.add(model8)
+db.add(model9)
+db.add(model10)
+db.add(model11)
+db.add(model12)
+db.add(model13)
+db.add(model14)
+db.add(model15)
+db.add(model16)
+db.add(model17)
+db.add(model18)
+db.add(model19)
+db.add(model20)
+db.add(model21)
+db.add(model22)
+db.add(model23)
+db.add(model24)
+db.add(model25)
+db.add(model26)
+db.add(model27)
+db.add(model28)
+db.add(model29)
+db.add(model30)
+db.add(model31)
+db.add(model32)
+db.add(model33)
+db.add(model34)
+db.add(model35)
+db.add(model36)
+db.add(model37)
+db.add(model38)
+db.add(model39)
+db.add(model40)
+db.add(model41)
+db.add(model42)
+db.add(model43)
+db.add(model44)
+db.add(model45)
+db.add(model46)
+db.add(model47)
+db.add(model48)
+db.add(model49)
+db.add(model50)
+db.add(model51)
+db.add(model52)
+db.add(model53)
+db.add(model54)
+db.add(model55)
+db.add(model56)
+db.add(model57)
+db.add(model58)
+db.add(model59)
+db.add(model60)
+db.add(model61)
+db.add(model62)
+db.add(model63)
+db.add(model64)
+db.add(model65)
+db.add(model66)
+db.add(model67)
+db.add(model68)
+db.add(model69)
+db.add(model70)
+db.add(model71)
+db.add(model72)
+db.add(model73)
+db.add(model74)
+db.add(model75)
+db.add(model76)
+db.add(model77)
+db.add(model78)
+db.add(model79)
+db.add(model80)
+db.add(model81)
+db.add(model82)
+db.add(model83)
+db.add(model84)
+db.add(model85)
+db.add(model86)
+db.add(model87)
+db.add(model88)
+db.add(model89)
+db.add(model90)
+db.add(model91)
+db.add(model92)
+db.add(model93)
+db.add(model94)
+db.add(model95)
+db.add(model96)
+db.add(model97)
+db.add(model98)
+db.add(model99)
+db.add(model100)
+db.add(model101)
+db.add(model102)
+db.add(model103)
+db.add(model104)
+db.add(model105)
+db.add(model106)
+db.add(model107)
+db.add(model108)
+db.add(model109)
+db.add(model110)
+db.add(model111)
+db.add(model112)
+db.add(model113)
+db.add(model114)
+db.add(model115)
+db.add(model116)
+db.add(model117)
+db.add(model118)
+db.add(model119)
+db.add(model120)
+db.add(model121)
+db.add(model122)
+db.add(model123)
+db.add(model124)
+db.add(model125)
+db.add(model126)
+db.add(model127)
+db.add(model128)
+db.add(model129)
+db.add(model130)
 db.add(model131)
 db.add(model132)
 db.add(model133)
-db.add(mode134)
-db.add(mode135)
-db.add(mode136)
-db.add(mode137)
-db.add(mode138)
+db.add(model134)
+db.add(model135)
+db.add(model136)
+db.add(model137)
+db.add(model138)
 db.add(model139)
 db.add(model140)
 db.add(model141)
@@ -4131,6 +4178,7 @@ db.add(model155)
 db.add(model156)
 db.add(model157)
 db.add(model158)
+db.add(model159)
 db.add(model160)
 db.add(model161)
 db.add(model162)
@@ -4257,7 +4305,8 @@ db.add(model282)
 db.add(model283)
 db.add(model284)
 db.add(model285)
+db.add(model286)
 db.add(model287)
-db.add(model288)
-db.add(model289)
+
+
 db.commit()
