@@ -137,7 +137,11 @@ def reset_password(user_id: int, new_password: str, db: Session = Depends(get_db
 
 @app.get("/questions/{question_id}", response_model=Question)
 def read_questions(question_id: int, db: Session = Depends(get_db)):
-    questions = db.query(models.QuestionModel).offset(question_id).first()
+    questions = (
+        db.query(models.QuestionModel)
+        .filter(models.QuestionModel.id == question_id)
+        .first()
+    )
     return questions
 
 
@@ -229,6 +233,7 @@ def read_user_answer(quize_list_uuid: str, token: str, db: Session = Depends(get
             models.UserAnswerModel.question_id == models.QuestionModel.id,
         )
         .filter(models.UserAnswerModel.quize_list_uuid == quize_list_uuid)
+        .order_by(models.UserAnswerModel.id)
         .all()
     )
     if user_answers is None:
