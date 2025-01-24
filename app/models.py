@@ -26,8 +26,8 @@ class QuestionModel(Base):
     __tablename__ = "questions"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    question_text = Column(String(255), nullable=False)
-    correct_answer = Column(String(255), nullable=False)
+    question_text = Column(String(500), nullable=False)
+    correct_answer = Column(String(500), nullable=False)
     choices: JSON = Column(JSON, nullable=False)
     commentary = Column(Text, nullable=False)
     tag = Column(String(255), nullable=True)
