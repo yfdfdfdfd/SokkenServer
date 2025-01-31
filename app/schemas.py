@@ -1,6 +1,8 @@
+from __future__ import annotations  # 追加
 from typing import Optional
 from pydantic import BaseModel, Field
 from datetime import datetime
+from typing import List  # 修正済み
 
 
 class UserCreate(BaseModel):
@@ -36,6 +38,7 @@ class Question(BaseModel):
     id: int
     question_text: str
     correct_answer: str
+    # choices: List[str]  # ここを修正
     choices: list[str]
     commentary: str
     tag: str | None = None
@@ -65,7 +68,10 @@ class FeedbackTemplate(BaseModel):
     class Config:
         orm_mode = True
 
-
+class QuestionCreateChild(BaseModel):
+    question_id: int = Field(description="問題ID")
+    is_correct: Optional[bool] = Field(default=False, description="正解かどうか")  # デフォルト値を False に設定
+    
 class UserAnswer(BaseModel):
     id: int
     user_id: int
@@ -81,11 +87,6 @@ class UserAnswer(BaseModel):
 class UserAnswerCreate(BaseModel):
     token: str = Field(description="トークン")
     child: list["QuestionCreateChild"] = Field(description="回答情報")
-
-
-class QuestionCreateChild(BaseModel):
-    question_id: int = Field(description="問題ID")
-    is_correct: Optional[bool] = Field(description="正解かどうか")
 
 
 class UserAnswerDetailResponse(BaseModel):

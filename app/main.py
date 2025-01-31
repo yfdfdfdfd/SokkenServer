@@ -1,4 +1,9 @@
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from typing import List
 from datetime import datetime, timedelta, timezone
+from typing import Optional
 import uuid
 from fastapi import Cookie, FastAPI, HTTPException, Depends, Response
 from sqlalchemy.orm import Session
@@ -20,6 +25,8 @@ from app.schemas import (
     UserLogin,
 )
 import logging
+from openai import OpenAI
+import traceback
 
 logging.basicConfig()
 logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
@@ -261,3 +268,117 @@ def read_user_answer(quize_list_uuid: str, token: str, db: Session = Depends(get
             )
         )
     return UserAnswerDetailResponse(child=child)
+
+
+@app.delete("/user_history_uuid")
+def delete_user_answer(token: str, quize_list_uuid: str, db: Session = Depends(get_db)):
+    session = (
+        db.query(models.UserSessionModel)
+        .filter(models.UserSessionModel.token == token)
+        .first()
+    )
+
+    if session is None:
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    db.query(models.UserAnswerModel).filter(
+        models.UserAnswerModel.user_id == session.user_id,
+        models.UserAnswerModel.quize_list_uuid == quize_list_uuid,
+    ).delete()
+    db.commit()
+
+
+# Ollama APIクライアントの設定
+client = OpenAI(
+    base_url='http://localhost:11434/v1',
+    api_key='ollama',  # required, but unused
+)
+ 
+# リクエストデータのモデル定義
+class Question(BaseModel):
+    tag: str
+    is_correct: Optional[bool]  # None を許容
+    time_taken: float
+
+@app.post("/generate-feedback")
+async def generate_feedback(request: Request):
+    print("generate-feedbackにアクセスがあったよ。")
+    try:
+        data = await request.json()
+        logging.debug(f"Received data: {data}")
+
+        status = data.get('status', [])
+
+        questions = [
+            Question(
+                tag=str(item['questionId']),
+                is_correct=item.get('isCorrect', False),  # Noneの場合、デフォルト値としてFalseを設定
+                time_taken=0
+            )
+            for item in status
+       ]
+        print("questions:",questions)
+        # questions = [
+        #     Question(tag=str(item['questionId']), is_correct=item['isCorrect'], time_taken=0)
+        #     for item in status
+        # ]
+
+        feedback_results = {
+            '深層学習': generate_feedback_by_tag("1", questions),
+            '法規・倫理': generate_feedback_by_tag("2", questions),
+            '基礎数学': generate_feedback_by_tag("3", questions),
+            'AI概論': generate_feedback_by_tag("4", questions),
+            '機械学習': generate_feedback_by_tag("5", questions)
+        }
+
+        combined_feedback = "\n".join(
+            f"{tag}: {text}" for tag, text in feedback_results.items()
+        )
+        return {"feedback": combined_feedback}
+
+        #print(f"Generated feedback: {feedback_results}")
+        #return feedback_results
+
+    except Exception as e:
+        logging.error(f"Error: {e}")
+        logging.error(traceback.format_exc())  # トレースバックを追加
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
+# タグごとにフィードバックを生成する関数
+def generate_feedback_by_tag(tag: str, data: List[Question]) -> str:
+    # タグに関連付けられた問題の取得
+    tagged_questions = [item for item in data if item.tag == tag]
+    print("tagged_questions:",tagged_questions)
+ 
+    if not tagged_questions:
+        return f"{tag}に関連するデータがありません。"
+ 
+    # correct_count = sum(item.is_correct for item in tagged_questions)
+    # None を False 扱いにする
+    correct_count = sum(
+        1 if item.is_correct is True else 0
+        for item in tagged_questions
+    )
+    total_count = len(tagged_questions)
+    avg_response_time = sum(item.time_taken for item in tagged_questions) / total_count
+    print("correct_count:",correct_count,"total_count:",total_count,"avg_response_time:",avg_response_time)
+ 
+    feedback = f"{tag}の正答率は{correct_count}/{total_count}で、平均解答時間は{avg_response_time:.2f}秒です。復習を行い、理解を深めましょう。\n"
+ 
+    # フィードバックをOLLAMAに生成させる
+    response = client.chat.completions.create(
+        model="ELYZA",
+        messages=[
+            {"role": "system", "content": "あなたはAI検定の指導者で、受験者に役立つ日本語のフィードバックを提供します。フィードバックは簡潔で正確にし、不要な英語や冗長な情報は含めないでください。"},
+            {"role": "user", "content": feedback}
+        ]
+    )
+ 
+    # フィードバックの出力
+    ollama_feedback = response.choices[0].message.content.strip()  # 不要な空白を削除
+    return ollama_feedback
+
+# アプリの起動
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
