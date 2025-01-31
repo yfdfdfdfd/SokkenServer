@@ -403,3 +403,21 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
+@app.delete("/user_history_uuid")
+def delete_user_answer(token: str, quize_list_uuid: str, db: Session = Depends(get_db)):
+    session = (
+        db.query(models.UserSessionModel)
+        .filter(models.UserSessionModel.token == token)
+        .first()
+    )
+
+    if session is None:
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    db.query(models.UserAnswerModel).filter(
+        models.UserAnswerModel.user_id == session.user_id,
+        models.UserAnswerModel.quize_list_uuid == quize_list_uuid,
+    ).delete()
+    db.commit()
